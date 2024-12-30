@@ -3,14 +3,45 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event Finder</title>
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <!-- Eigenes CSS -->
+  <link rel="stylesheet" href="styles/style.css">
 </head>
 
 <body>
-  <h1>Hello World</h1>
-  <p>I'm hosted with GitHub Pages.</p>
-  <canvas id="example" width="200" height="200" style="border:1px solid #000000;"></canvas>
-  <script src="script.js"></script>
+  <header>
+    <h1>Event Finder</h1>
+    <nav>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Events</a></li>
+        <li><a href="#">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section id="location">
+      <h1 style="color: red;">TODO: Add option to select location manually.</h1>
+      <h2>Events in your area</h2>
+      <div id="map"></div>
+    </section>
+
+    <section id="events">
+      <h2>Available events</h2>
+      <div id="event-list"></div>
+    </section>
+  </main>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+  <script src="scripts/main.js"></script>
 </body>
 
 </html>
