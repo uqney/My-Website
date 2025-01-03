@@ -1,16 +1,15 @@
-/* styles/style.css */
-
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 header {
-    background-color: #333333;
-    color: #fff;
-    padding: 1rem;
     text-align: center;
+    padding: 20px;
+    background-color: #000033;
+    color: white;
 }
 
 header ul {
@@ -31,19 +30,39 @@ header ul li a {
 }
 
 main {
-    padding: 1rem;
+    padding: 20px;
 }
 
-#map {
-    height: 40rem;
-    width: 100%;
-    margin: 1rem 0;
-    border: 1px solid #333333;
+.upload-container {
+    text-align: center;
+    margin-bottom: 20px;
 }
 
+.upload-input {
+    align-content: center;
+    margin-top: 10px;
+    padding: 10px;
+}
 
-#event-list {
+.panorama-container {
+    aspect-ratio: 16 / 9;
+}
+
+.aspect-ratio-16-9 {
+    display: flow-root;
+    position: relative;
+}
+
+@media (max-width: 600px) {
+    .panorama-container {
+        aspect-ratio: 2 / 3;
+        /* Lower heigt for tablets and smartphones */
+    }
+}
+
+#panorama-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
     gap: 1rem;
 }
