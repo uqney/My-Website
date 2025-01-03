@@ -5,17 +5,15 @@ function displayPanoramas() {
         const panoramaCard = document.createElement('div');
         panoramaCard.classList.add('panorama-element');
         const panoramaSrc = panorama.imageUrl;
-        const img = new Image();
-        img.src = panoramaSrc;
-        const originalWidth = img.naturalWidth;
-        const originalHeight = img.naturalHeight;
-        const targetWidth = window.innerWidth * 0.6; // Gewünschte Breite
-        const targetHeight = (originalHeight / originalWidth) * targetWidth; // Höhe basierend auf Seitenverhältnis
+        const panoramaWidth = panorama.width;
+        const panoramaHeight = panorama.height;
+        const targetWidth = window.innerWidth * 0.45; // Gewünschte Breite
+        const targetHeight = (panoramaHeight / panoramaWidth) * targetWidth; // Höhe basierend auf Seitenverhältnis
         const timeStamp = panorama.timeStamp;
         panoramaCard.innerHTML = `
         <h3>Panorama ${index + 1}</h3>
         <img src="${panoramaSrc}" width="${targetWidth}" height="${targetHeight}">
-        <p>${originalWidth}px * ${originalHeight}px</p>
+        <p>${panoramaWidth}px * ${panoramaHeight}px</p>
         <p>Uploaded at: ${timeStamp}</p>
         `;
         panoramaList.appendChild(panoramaCard);

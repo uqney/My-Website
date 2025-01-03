@@ -45,24 +45,24 @@ main {
 }
 
 .panorama-container {
-    aspect-ratio: 16 / 9;
-}
-
-.aspect-ratio-16-9 {
-    display: flow-root;
-    position: relative;
+    height: 70vh;
+    width: 100%;
 }
 
 @media (max-width: 600px) {
     .panorama-container {
-        aspect-ratio: 2 / 3;
-        /* Lower heigt for tablets and smartphones */
+        height: 62vh;
+        /* Lower height for tablets and smartphones */
     }
 }
 
 #panorama-list {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
     grid-template-rows: auto;
     gap: 1rem;
+}
+
+h2 {
+    text-align: center;
 }
