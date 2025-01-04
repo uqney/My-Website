@@ -31,6 +31,23 @@
   </header>
 
   <main>
+    <!---
+        <div class="upload-container">
+      <label for="uploadImage" class="upload-label">Select a panorama:</label>
+      <input type="file" id="uploadImage" accept="image/*" class="upload-input" />
+    </div>
+    -->
+    <section class="camera-section">
+      <h2>Kameraaufnahme</h2>
+      <p>Nutze die Kamera, um ein Panorama aufzunehmen:</p>
+
+      <video id="cameraPreview" autoplay playsinline
+        style="max-width: 100%; border: 1px solid #ddd; border-radius: 10px;"></video>
+      <button id="captureButton">Bild aufnehmen</button>
+      <canvas id="captureCanvas" style="display: none;"></canvas>
+      <div id="previewContainer"></div>
+    </section>
+
     <section class="camera-section">
       <h2>Aufnehmen eines Panoramabilds</h2>
       <p>Wählen Sie ein Bild aus oder nehmen Sie ein neues mit Ihrer Kamera auf:</p>
@@ -41,13 +58,10 @@
       <div id="previewContainer"></div>
     </section>
 
-    <!---
-        <div class="upload-container">
+    <div class="upload-container">
       <label for="uploadImage" class="upload-label">Select a panorama:</label>
       <input type="file" id="uploadImage" accept="image/*" class="upload-input" />
     </div>
-    -->
-
 
     <div id="panorama" class="panorama-container"></div>
   </main>
@@ -56,7 +70,9 @@
   <script src="scripts/panorama_view.js"></script>
   <script>
     const cameraInput = document.getElementById('cameraInput');
-    const previewContainer = document.getElementById('previewContainer');
+    const processImageButton = document.getElementById('processImageButton');
+    $1
+
 
     cameraInput.addEventListener('change', (event) => {
       const file = event.target.files[0];
@@ -68,10 +84,58 @@
           img.alt = 'Aufgenommenes Panorama';
           img.style.maxWidth = '100%';
           previewContainer.innerHTML = ''; // Vorherige Inhalte löschen
-          previewContainer.appendChild(img);
+          $1
+
+          // Button-Funktion: Bild hochladen
+          processImageButton.addEventListener('click', () => {
+            if (!img || !img.src) {
+              alert('Kein Bild vorhanden, das hochgeladen werden kann.');
+              return;
+            }
+
+            const panoramas = JSON.parse(localStorage.getItem('uploadedPanoramas')) || [];
+            const panoramaData = {
+              imageUrl: img.src,
+              timeStamp: new Date().toLocaleString()
+            };
+
+            panoramas.push(panoramaData);
+            localStorage.setItem('uploadedPanoramas', JSON.stringify(panoramas));
+            alert('Bild wurde erfolgreich hochgeladen!');
+          });
         };
         reader.readAsDataURL(file);
       }
+    });
+  </script>
+  <script>
+    const cameraPreview = document.getElementById('cameraPreview');
+    const captureButton = document.getElementById('captureButton');
+    const captureCanvas = document.getElementById('captureCanvas');
+
+
+    // Zugriff auf die Kamera
+    navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+      .then((stream) => {
+        cameraPreview.srcObject = stream;
+      })
+      .catch((error) => {
+        console.error('Kamera konnte nicht gestartet werden:', error);
+      });
+
+    captureButton.addEventListener('click', () => {
+      const context = captureCanvas.getContext('2d');
+      captureCanvas.width = cameraPreview.videoWidth;
+      captureCanvas.height = cameraPreview.videoHeight;
+      context.drawImage(cameraPreview, 0, 0, captureCanvas.width, captureCanvas.height);
+
+      const imageData = captureCanvas.toDataURL('image/png');
+      const img = document.createElement('img');
+      img.src = imageData;
+      img.alt = 'Aufgenommenes Panorama';
+      img.style.maxWidth = '100%';
+      previewContainer.innerHTML = ''; // Vorherige Inhalte löschen
+      previewContainer.appendChild(img);
     });
   </script>
 </body>
