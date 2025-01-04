@@ -49,18 +49,130 @@ main {
     width: 100%;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 1024px) {
     .panorama-container {
-        height: 62vh;
-        /* Lower height for tablets and smartphones */
+        height: 60vh;
     }
 }
 
+@media (max-width: 768px) {
+    .panorama-container {
+        height: 50vh;
+    }
+
+    header ul {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .panorama-container {
+        height: 40vh;
+    }
+
+    h2 {
+        font-size: 1.2rem;
+    }
+}
+
+/* Panorama List Styles */
 #panorama-list {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 1rem;
+    /* Abstand zwischen den Elementen */
+    padding: 1rem;
+    max-width: max-content;
+    margin: 0 auto;
+    /* Zentriere die Liste */
+}
+
+/* Panorama Item Styles */
+.panorama-element {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 0.5rem;
+    /* Reduziere den Innenabstand */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Panorama Image Styles */
+.panorama-image {
+    width: 100%;
+    /* Füllt den Container aus */
+    height: auto;
+    /* Beibehaltung des Seitenverhältnisses */
+    border-radius: 10px;
+    /* Optionale abgerundete Ecken */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Leichter Schatten */
+}
+
+/* Für kleinere Bildschirme */
+@media (max-width: 768px) {
+    #panorama-list {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        padding: 0.5rem;
+        /* Weniger Außenabstand */
+    }
+
+    .panorama-element {
+        padding: 0.25rem;
+        /* Weniger Innenabstand */
+    }
+
+    .panorama-element h2 {
+        font-size: 1rem;
+        /* Kleinere Schriftgröße für Titel */
+    }
+
+    .panorama-element p {
+        font-size: 0.875rem;
+        /* Kleinere Schriftgröße für Text */
+    }
+}
+
+/* Für sehr kleine Bildschirme */
+@media (max-width: 480px) {
+    #panorama-list {
+        grid-template-columns: 1fr;
+        padding: 0.25rem;
+        /* Noch weniger Außenabstand */
+    }
+
+    .panorama-element {
+        padding: 0.2rem;
+        /* Noch kompakter für sehr kleine Bildschirme */
+    }
+
+    .panorama-element h2 {
+        font-size: 0.875rem;
+        /* Noch kleinere Schriftgröße für Titel */
+    }
+
+    .panorama-element p {
+        font-size: 0.75rem;
+        /* Noch kleinere Schriftgröße für Text */
+    }
+}
+
+/* Hover-Effekt für die Panorama-Elemente */
+.panorama-element:hover {
+    transform: scale(1.02);
+    transition: transform 0.2s ease-in-out;
+}
+
+@media (min-width: 1440px) {
+    #panorama-list {
+        gap: 3rem;
+        /* Erhöht den Abstand zwischen den Karten auf großen Bildschirmen */
+    }
 }
 
 h2 {
