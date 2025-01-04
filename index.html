@@ -7,6 +7,7 @@
   <title>360° Panorama Viewer</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css" />
   <link rel="stylesheet" href="styles/style.css" />
+  <link rel="stylesheet" href="styles/dark_mode_slider.css" />
   <link rel="icon" href="favico.ico" type="image/x-icon">
 </head>
 
@@ -20,6 +21,12 @@
         <li><a href="dashboard.html">Dashboard</a></li>
       </ul>
     </nav>
+    <div id="dark-mode-container" class="fixed-top-right">
+      <label class="switch">
+        <input type="checkbox" id="dark-mode-toggle">
+        <span class="slider"></span>
+      </label>
+    </div>
   </header>
 
   <main>
@@ -31,6 +38,7 @@
     <div id="panorama" class="panorama-container"></div>
   </main>
 
+  <script src="scripts/toggle_theme.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
   <script src="scripts/panorama_view.js"></script>
 </body>

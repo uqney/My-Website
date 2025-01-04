@@ -1,15 +1,37 @@
+:root {
+    --background-color: #ffffff;
+    --text-color: #000000;
+    --header-background: #99CCFF;
+    --header-text-color: #000000;
+    --element-background: #f9f9f9;
+    --element-border: #dddddd;
+}
+
 body {
+    background-color: var(--background-color);
+    color: var(--text-color);
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Dark Mode Variablen */
+body.dark {
+    --background-color: #121212;
+    --text-color: #e0e0e0;
+    --header-background: #000033;
+    --header-text-color: #ffffff;
+    --element-background: #1e1e1e;
+    --element-border: #333333;
 }
 
 header {
+    background-color: var(--header-background);
+    color: var(--header-text-color);
     text-align: center;
     padding: 20px;
-    background-color: #000033;
-    color: white;
 }
 
 header ul {
@@ -25,7 +47,7 @@ header ul li {
 }
 
 header ul li a {
-    color: white;
+    color: var(--header-text-color);
     text-decoration: none;
 }
 
@@ -90,8 +112,8 @@ main {
 
 /* Panorama Item Styles */
 .panorama-element {
-    background-color: #fff;
-    border: 1px solid #ddd;
+    background-color: var(--element-background);
+    border: 1px solid var(--element-border);
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 0.5rem;
@@ -100,6 +122,7 @@ main {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    transition: background-color 0.3s, border-color 0.3s;
 }
 
 /* Panorama Image Styles */

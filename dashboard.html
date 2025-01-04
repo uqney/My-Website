@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>360° Panorama Viewer</title>
   <link rel="stylesheet" href="styles/style.css" />
+  <link rel="stylesheet" href="styles/dark_mode_slider.css" />
   <link rel="icon" href="favico.ico" type="image/png">
 </head>
 
@@ -19,6 +20,12 @@
         <li><a href="">Dashboard</a></li>
       </ul>
     </nav>
+    <div id="dark-mode-container" class="fixed-top-right">
+      <label class="switch">
+        <input type="checkbox" id="dark-mode-toggle">
+        <span class="slider"></span>
+      </label>
+    </div>
   </header>
 
   <main>
@@ -27,6 +34,7 @@
     <div id="panorama-list"></div>
   </main>
 
+  <script src="scripts/toggle_theme.js"></script>
   <script src="scripts/dashboard.js"></script>
 </body>
 
