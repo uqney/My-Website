@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css" />
   <link rel="stylesheet" href="styles/style.css" />
   <link rel="stylesheet" href="styles/dark_mode_slider.css" />
+  <script src="scripts/toggle_theme.js"></script>
   <link rel="icon" href="favico.ico" type="image/x-icon">
 </head>
 
@@ -30,17 +31,49 @@
   </header>
 
   <main>
-    <div class="upload-container">
+    <section class="camera-section">
+      <h2>Aufnehmen eines Panoramabilds</h2>
+      <p>Wählen Sie ein Bild aus oder nehmen Sie ein neues mit Ihrer Kamera auf:</p>
+
+      <input type="file" accept="image/*" capture="environment" id="cameraInput">
+      <button id="processImageButton">Bild hochladen</button>
+
+      <div id="previewContainer"></div>
+    </section>
+
+    <!---
+        <div class="upload-container">
       <label for="uploadImage" class="upload-label">Select a panorama:</label>
       <input type="file" id="uploadImage" accept="image/*" class="upload-input" />
     </div>
+    -->
+
 
     <div id="panorama" class="panorama-container"></div>
   </main>
 
-  <script src="scripts/toggle_theme.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
   <script src="scripts/panorama_view.js"></script>
+  <script>
+    const cameraInput = document.getElementById('cameraInput');
+    const previewContainer = document.getElementById('previewContainer');
+
+    cameraInput.addEventListener('change', (event) => {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const img = document.createElement('img');
+          img.src = e.target.result;
+          img.alt = 'Aufgenommenes Panorama';
+          img.style.maxWidth = '100%';
+          previewContainer.innerHTML = ''; // Vorherige Inhalte löschen
+          previewContainer.appendChild(img);
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  </script>
 </body>
 
 </html>
