@@ -65,7 +65,8 @@ uploadInput.addEventListener('change', function (event) {
                     hotSpots: hotspots,
                     width: width,
                     height: height,
-                    timeStamp: timeStamp
+                    timeStamp: timeStamp,
+                    isActive: true
                 };
 
                 addDataToLocalStorage(panoramaData);

@@ -20,21 +20,27 @@ function displayPanoramas() {
     panoramas.forEach((panorama, index) => {
         const clone = panoramaTemplate.content.cloneNode(true);
 
-        const image = clone.querySelector('.panorama-image');
+        const rootElement = clone.querySelector('.panorama-element');
+
+        const image = rootElement.querySelector('.panorama-image');
         image.src = panorama.imageUrl;
         image.alt = `Panorama ${index + 1}`;
 
-        const heading = clone.querySelector('.panorama-title');
-        const fullTitle = panorama.title;
-        heading.textContent = fullTitle;
-        heading.title = fullTitle; // Tooltip mit vollem Titel
+        const heading = rootElement.querySelector('.panorama-title');
+        const title = panorama.title;
+        heading.textContent = title;
+        heading.title = title; // Tooltip mit vollem Titel
 
-
-        const dimensions = clone.querySelector('.panorama-dimensions');
+        const dimensions = rootElement.querySelector('.panorama-dimensions');
         dimensions.textContent = `${panorama.width}px × ${panorama.height}px`;
 
-        const uploadInfo = clone.querySelector('.panorama-upload-info');
+        const uploadInfo = rootElement.querySelector('.panorama-upload-info');
         uploadInfo.textContent = `Uploaded on: ${panorama.timeStamp}`;
+
+        // Aktives Panorama hervorheben
+        if (panorama.isActive) {
+            rootElement.classList.add("active");
+        }
 
         panoramaList.appendChild(clone);
     });
@@ -74,9 +80,23 @@ function handleDelete(panoramaElement) {
 }
 
 function handleActivate(panoramaElement) {
+    const panoramas = JSON.parse(localStorage.getItem('uploadedPanoramas')) || [];
     const title = panoramaElement.querySelector(".panorama-title").textContent;
-    alert(`${title} has been set as active!`);
-    // TODO: Hier kannst du das Aktivieren-Feature implementieren
+
+    // Finde das Panorama und markiere es als aktiv
+    panoramas.forEach(panorama => {
+        panorama.isActive = (panorama.title === title);
+    });
+
+    // Speichere die aktualisierte Liste im Local Storage
+    localStorage.setItem('uploadedPanoramas', JSON.stringify(panoramas));
+
+    // Visuelles Feedback im Dashboard
+    const allElements = document.querySelectorAll(".panorama-element");
+    allElements.forEach(element => element.classList.remove("active"));
+    panoramaElement.classList.add("active");
+
+    alert(`${title} wurde als aktives Panorama gesetzt!`);
 }
 
 document.addEventListener("DOMContentLoaded", () => {

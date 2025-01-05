@@ -11,14 +11,11 @@ function viewPanorama(imageUrl, hotspots) {
 // Optional: Das zuletzt gespeicherte Bild laden
 window.onload = function () {
     const panoramas = JSON.parse(localStorage.getItem('uploadedPanoramas')) || [];
-    const lastUploaded = panoramas[panoramas.length - 1];
-    if (lastUploaded) {
-        pannellum.viewer('panorama', {
-            "type": "equirectangular",
-            "panorama": lastUploaded.imageUrl,
-            "autoLoad": true,
-            "hotSpots": lastUploaded.hotspots
-        });
-    }
+    panoramas.forEach(panorama => {
+        if (panorama.isActive) {
+            viewPanorama(panorama.imageUrl, panorama.hotSpots);
+            return;
+        }
+    });
 };
 
