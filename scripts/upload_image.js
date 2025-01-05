@@ -68,7 +68,7 @@ uploadInput.addEventListener('change', function (event) {
 });
 
 function getCompressedImageUrl(canvas) {
-    var compressedImageUrl = canvas.toDataURL('image/jpeg', 0.8)
+    var compressedImageUrl = canvas.toDataURL('image/jpeg', 0.8);
 
     // Speicherplatz prüfen
     const imageSize = Math.ceil(compressedImageUrl.length / 1024); // Größe in KB
@@ -88,7 +88,7 @@ function getCompressedImageUrl(canvas) {
                 return;
             }
         }
-        const lowerQualityImageUrl = captureCanvas.toDataURL('image/jpeg', 0.5); // Stärker komprimieren
+        const lowerQualityImageUrl = canvas.toDataURL('image/jpeg', 0.5); // Stärker komprimieren
         compressedImageUrl = lowerQualityImageUrl;
     }
 
