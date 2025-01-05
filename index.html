@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>360° Panorama Viewer</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css" />
   <link rel="stylesheet" href="styles/style.css" />
   <link rel="stylesheet" href="styles/dark_mode_slider.css" />
@@ -31,113 +32,26 @@
   </header>
 
   <main>
-    <!---
-        <div class="upload-container">
-      <label for="uploadImage" class="upload-label">Select a panorama:</label>
-      <input type="file" id="uploadImage" accept="image/*" class="upload-input" />
-    </div>
-    -->
-    <section class="camera-section">
-      <h2>Kameraaufnahme</h2>
-      <p>Nutze die Kamera, um ein Panorama aufzunehmen:</p>
-
-      <video id="cameraPreview" autoplay playsinline
-        style="max-width: 100%; border: 1px solid #ddd; border-radius: 10px;"></video>
-      <button id="captureButton">Bild aufnehmen</button>
-      <canvas id="captureCanvas" style="display: none;"></canvas>
-      <div id="previewContainer"></div>
-    </section>
-
-    <section class="camera-section">
-      <h2>Aufnehmen eines Panoramabilds</h2>
-      <p>Wählen Sie ein Bild aus oder nehmen Sie ein neues mit Ihrer Kamera auf:</p>
-
-      <input type="file" accept="image/*" capture="environment" id="cameraInput">
-      <button id="processImageButton">Bild hochladen</button>
-
-      <div id="previewContainer"></div>
-    </section>
-
-    <div class="upload-container">
-      <label for="uploadImage" class="upload-label">Select a panorama:</label>
-      <input type="file" id="uploadImage" accept="image/*" class="upload-input" />
+    <p style="text-align: center;">Take a new picture with your camera or select one from your device:</p>
+    <div class="selection-container">
+      <button id="activate-camera" class="button">Activate camera</button>
+      <span class="seperator">or</span>
+      <input type="file" accept="image/*" capture="environment" id="upload-image" class="input">
     </div>
 
-    <div id="panorama" class="panorama-container"></div>
+    <div class="camera-container">
+      <video id="camera-preview" playsinline autoplay></video>
+      <button id="capture-button" data-tooltip="Take a photo"><i class="material-icons">photo_camera</i></button>
+      <button id="close-camera" data-tooltip="Close camera"><i class="material-icons">no_photography</i></button>
+      <canvas id="capture-canvas"></canvas>
+    </div>
+
+    <div id="panorama" class="panorama-container" onclick="myFunction()"></div>
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+  <script src="scripts/camera_input.js"></script>
   <script src="scripts/panorama_view.js"></script>
-  <script>
-    const cameraInput = document.getElementById('cameraInput');
-    const processImageButton = document.getElementById('processImageButton');
-    $1
-
-
-    cameraInput.addEventListener('change', (event) => {
-      const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          const img = document.createElement('img');
-          img.src = e.target.result;
-          img.alt = 'Aufgenommenes Panorama';
-          img.style.maxWidth = '100%';
-          previewContainer.innerHTML = ''; // Vorherige Inhalte löschen
-          $1
-
-          // Button-Funktion: Bild hochladen
-          processImageButton.addEventListener('click', () => {
-            if (!img || !img.src) {
-              alert('Kein Bild vorhanden, das hochgeladen werden kann.');
-              return;
-            }
-
-            const panoramas = JSON.parse(localStorage.getItem('uploadedPanoramas')) || [];
-            const panoramaData = {
-              imageUrl: img.src,
-              timeStamp: new Date().toLocaleString()
-            };
-
-            panoramas.push(panoramaData);
-            localStorage.setItem('uploadedPanoramas', JSON.stringify(panoramas));
-            alert('Bild wurde erfolgreich hochgeladen!');
-          });
-        };
-        reader.readAsDataURL(file);
-      }
-    });
-  </script>
-  <script>
-    const cameraPreview = document.getElementById('cameraPreview');
-    const captureButton = document.getElementById('captureButton');
-    const captureCanvas = document.getElementById('captureCanvas');
-
-
-    // Zugriff auf die Kamera
-    navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
-      .then((stream) => {
-        cameraPreview.srcObject = stream;
-      })
-      .catch((error) => {
-        console.error('Kamera konnte nicht gestartet werden:', error);
-      });
-
-    captureButton.addEventListener('click', () => {
-      const context = captureCanvas.getContext('2d');
-      captureCanvas.width = cameraPreview.videoWidth;
-      captureCanvas.height = cameraPreview.videoHeight;
-      context.drawImage(cameraPreview, 0, 0, captureCanvas.width, captureCanvas.height);
-
-      const imageData = captureCanvas.toDataURL('image/png');
-      const img = document.createElement('img');
-      img.src = imageData;
-      img.alt = 'Aufgenommenes Panorama';
-      img.style.maxWidth = '100%';
-      previewContainer.innerHTML = ''; // Vorherige Inhalte löschen
-      previewContainer.appendChild(img);
-    });
-  </script>
 </body>
 
 </html>

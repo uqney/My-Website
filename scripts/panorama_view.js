@@ -1,4 +1,4 @@
-const uploadInput = document.getElementById('uploadImage');
+const uploadInput = document.getElementById('upload-image');
 
 uploadInput.addEventListener('change', function (event) {
     const file = event.target.files[0];
@@ -13,9 +13,7 @@ uploadInput.addEventListener('change', function (event) {
                 const height = img.height;
                 const aspectRatio = width / height;
 
-                console.log('Width:', width, 'Height:', height, 'Aspect Ratio:', aspectRatio);
-
-                const timeStamp = new Date().toLocaleDateString();
+                const timeStamp = new Date().toLocaleString();
 
                 // Hotspots definieren
                 const hotspots = [
