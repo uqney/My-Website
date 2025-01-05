@@ -146,13 +146,25 @@ main {
 
     header ul {
         flex-direction: column;
-        gap: 0.5rem;
+        gap: 1rem;
     }
 }
 
 @media (max-width: 480px) {
     .panorama-container {
         height: 40vh;
+    }
+
+    header {
+        font-size: 0.875rem;
+    }
+
+    header ul {
+        gap: 1.5rem;
+    }
+
+    body {
+        font-size: 0.875rem;
     }
 
     h2 {
