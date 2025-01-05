@@ -5,8 +5,13 @@ function addDataToLocalStorage(data) {
 }
 
 function removeDataFromLocalStorage(title) {
-    const panoramas = JSON.parse(localStorage.getItem('uploadedPanoramas')) || [];
-    const updatedPanoramas = panoramas.filter(panorama => panorama.name != title);
+    var panoramas = JSON.parse(localStorage.getItem('uploadedPanoramas')) || [];
+    var updatedPanoramas = [];
+    panoramas.forEach(panorama => {
+        if (panorama.title != title) {
+            updatedPanoramas.push(panorama);
+        }
+    })
 
     // Aktualisiere den Local Storage
     localStorage.setItem('uploadedPanoramas', JSON.stringify(updatedPanoramas));
@@ -25,4 +30,5 @@ function optimizeLocalStorageSpace() {
         panorama.imageUrl = canvas.toDataURL('image/jpeg', 0.5);
     });
     localStorage.setItem('uploadedPanoramas', JSON.stringify(panoramas));
+    console.log("image deletet");
 }
