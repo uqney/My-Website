@@ -8,7 +8,7 @@ uploadInput.addEventListener('change', function (event) {
         // Überprüfen, ob die Datei ein Bild ist und den erlaubten Typ hat
         const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
         if (!allowedTypes.includes(file.type)) {
-            alert('Die hochgeladene Datei ist kein unterstütztes Bildformat. Erlaubt sind: JPEG, PNG, WEBP.');
+            alert('The uploaded file is not a supported image format. Allowed are: JPEG, PNG, WEBP.');
             uploadInput.value = ''; // Zurücksetzen des Eingabefeldes
             return;
         }
@@ -16,7 +16,7 @@ uploadInput.addEventListener('change', function (event) {
         // Überprüfen, ob das Bild bereits hochgeladen wurde
         const isDuplicate = checkDuplicateImage(baseName);
         if (isDuplicate) {
-            alert('Dieses Bild wurde bereits hochgeladen.');
+            alert('This image has already been uploaded.');
             uploadInput.value = ''; // Zurücksetzen des Eingabefeldes
             return;
         }
@@ -33,7 +33,7 @@ uploadInput.addEventListener('change', function (event) {
 
                 // Warnen, falls das Seitenverhältnis kleiner als 16:9 ist
                 if (aspectRatio < 16 / 9) {
-                    const proceed = confirm('Das Seitenverhältnis des Bildes ist kleiner als 16:9. Es könnte in der Anzeige verzerrt werden. Möchten Sie das Bild dennoch hochladen?');
+                    const proceed = confirm('The aspect ratio of the image is smaller than 16:9. It could be distorted in the display. Would you still like to upload the image?');
                     if (!proceed) {
                         uploadInput.value = ''; // Zurücksetzen des Eingabefeldes
                         return;
@@ -93,14 +93,14 @@ function getCompressedImageUrl(canvas) {
     const currentStorage = JSON.stringify(localStorage).length / 1024;
 
     if ((currentStorage + imageSize) > maxStorage) {
-        const proceedWithGlobalCompression = confirm('Der Speicherplatz ist fast voll. Möchten Sie alle gespeicherten Bilder komprimieren, um mehr Platz zu schaffen?');
+        const proceedWithGlobalCompression = confirm('The storage space is almost full. Would you like to compress all saved images to create more space?');
         if (proceedWithGlobalCompression) {
             optimizeLocalStorageSpace();
-            alert('Alle gespeicherten Bilder wurden komprimiert.');
+            alert('All saved images have been compressed.');
         } else {
-            const proceedWithLowerQuality = confirm('Der Speicherplatz ist fast voll. Möchten Sie das Bild mit niedrigerer Qualität speichern, um Platz zu sparen?');
+            const proceedWithLowerQuality = confirm('The storage space is almost full. Would you like to save the image at a lower quality to save space?');
             if (!proceedWithLowerQuality) {
-                alert('Das Bild wurde nicht gespeichert.');
+                alert('The image has not been saved.');
                 uploadInput.value = ''; // Eingabefeld zurücksetzen
                 return;
             }

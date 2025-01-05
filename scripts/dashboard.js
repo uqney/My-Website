@@ -69,13 +69,13 @@ function handleDelete(panoramaElement) {
         removeDataFromLocalStorage(title);
         panoramaElement.remove();
         updatePanoramaListStatus();
-        alert(`${title} was removed successfully.`);
+        alert(`${title} has been removed successfully.`);
     }
 }
 
 function handleActivate(panoramaElement) {
     const title = panoramaElement.querySelector(".panorama-title").textContent;
-    alert(`${title} was set as active!`);
+    alert(`${title} has been set as active!`);
     // TODO: Hier kannst du das Aktivieren-Feature implementieren
 }
 

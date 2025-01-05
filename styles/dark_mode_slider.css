@@ -4,15 +4,12 @@
     right: 10px;
 }
 
-/* Rest des Slider-CSS */
-
-
 /* Slider Container Styles */
 .switch {
     position: relative;
     display: inline-block;
     width: 50px;
-    height: 24px;
+    height: 28px;
 }
 
 /* Hide the default HTML checkbox */
@@ -30,9 +27,12 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #000033;
+    background-color: transparent;
+    /* Hintergrund transparent */
     transition: .4s;
     border-radius: 24px;
+    border: 2px solid #000033;
+    /* Optional: Rahmen für mehr Sichtbarkeit */
 }
 
 .slider:before {
@@ -42,15 +42,63 @@
     width: 18px;
     left: 3px;
     bottom: 3px;
-    background-color: white;
+    background-color: transparent;
+    /* Kein Hintergrund */
     transition: .4s;
     border-radius: 50%;
+    box-shadow: none;
+    /* Optional: Schatten entfernen */
 }
 
 input:checked+.slider {
-    background-color: #99CCFF;
+    background-color: transparent;
+    /* Hintergrund transparent */
+    border-color: #99CCFF;
+    /* Rahmenfarbe anpassen */
 }
 
 input:checked+.slider:before {
     transform: translateX(26px);
+}
+
+/* Icons Styling */
+.sun-icon,
+.moon-icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    /* Größere Icons für bessere Sichtbarkeit */
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    pointer-events: none;
+    /* Klicks auf die Icons ignorieren */
+}
+
+.sun-icon {
+    left: 3px;
+    top: 14px;
+    /* Zentriere das Icon besser */
+    color: #f39c12;
+    opacity: 1;
+}
+
+.moon-icon {
+    right: 10px;
+    top: 14px;
+    /* Zentriere das Icon besser */
+    color: #34495e;
+    opacity: 0;
+}
+
+/* Bewegung und Sichtbarkeit der Icons im aktiven Zustand */
+input:checked+.slider .sun-icon {
+    transform: translateY(-50%) translateX(-10px);
+    /* Leicht nach links schieben */
+    opacity: 0;
+}
+
+input:checked+.slider .moon-icon {
+    transform: translateY(-50%) translateX(10px);
+    /* Leicht nach rechts schieben */
+    opacity: 1;
 }

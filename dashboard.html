@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>360° Panorama Viewer</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="styles/style.css" />
   <link rel="stylesheet" href="styles/dark_mode_slider.css" />
   <script src="scripts/toggle_theme.js"></script>
@@ -24,7 +25,10 @@
     <div id="dark-mode-container" class="fixed-top-right">
       <label class="switch">
         <input type="checkbox" id="dark-mode-toggle">
-        <span class="slider"></span>
+        <span class="slider">
+          <span class="sun-icon"><i class="material-icons">light_mode</i></span>
+          <span class="moon-icon"><i class="material-icons">dark_mode</i></span>
+        </span>
       </label>
     </div>
   </header>
