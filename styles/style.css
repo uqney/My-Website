@@ -56,8 +56,12 @@ header ul li a {
     text-decoration: none;
 }
 
+h2 {
+    text-align: center;
+}
+
 video {
-    width: max-content;
+    max-width: 100%;
     border: 1px solid var(--element-border);
     border-radius: 10px;
 }
@@ -124,6 +128,34 @@ button[data-tooltip]:hover::after {
     cursor: pointer;
 }
 
+.camera-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 5px auto;
+    padding: 10px;
+    max-width: 50vh;
+    /* Optional: Begrenzung der Breite */
+    border-radius: 10px;
+    /* Optional: Abgerundete Ecken */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    /* Optional: Schatteneffekt */
+}
+
+#camera-preview {
+    width: 100%;
+    height: auto;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+#capture-canvas {
+    display: none;
+    /* Canvas nur für interne Zwecke einblenden */
+}
+
 main {
     padding: 20px;
 }
@@ -140,6 +172,7 @@ main {
 }
 
 @media (max-width: 768px) {
+
     .panorama-container {
         height: 50vh;
     }
@@ -172,44 +205,116 @@ main {
     }
 }
 
-/* Panorama List Styles */
+/* Panorama List */
 #panorama-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 1rem;
-    /* Abstand zwischen den Elementen */
     padding: 1rem;
-    max-width: max-content;
+    width: 100%;
     margin: 0 auto;
-    /* Zentriere die Liste */
+    box-sizing: border-box;
+}
+
+#panorama-list p {
+    color: #999999;
+}
+
+#panorama-list.empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    /* Elterncontainer sollte eine Höhe haben */
+}
+
+#panorama-list.empty p {
+    text-align: center;
+    font-size: 1.2em;
 }
 
 /* Panorama Item Styles */
 .panorama-element {
-    background-color: var(--element-background);
-    border: 1px solid var(--element-border);
+    background-color: var(--element-background, #f9f9f9);
+    border: 1px solid var(--element-border, #ddd);
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 0.5rem;
-    /* Reduziere den Innenabstand */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    transition: background-color 0.3s, border-color 0.3s;
+    padding: 1rem;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
+.panorama-element:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
 
 /* Panorama Image Styles */
 .panorama-image {
-    width: 100%;
-    /* Füllt den Container aus */
+    max-width: 100%;
+    max-height: 100%;
     height: auto;
-    /* Beibehaltung des Seitenverhältnisses */
-    border-radius: 10px;
-    /* Optionale abgerundete Ecken */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    /* Leichter Schatten */
+    border-radius: 5px;
+    margin-bottom: 0.5rem;
 }
+
+/* Panorama Title */
+.panorama-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+/* Panorama Dimensions */
+.panorama-dimensions {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Panorama Upload Info */
+.panorama-upload-info {
+    font-size: 0.8rem;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+button.edit-button {
+    background-color: #007bff;
+    color: white;
+}
+
+button.edit-button:hover {
+    background-color: #0056b3;
+}
+
+button.delete-button {
+    background-color: #dc3545;
+    color: white;
+}
+
+button.delete-button:hover {
+    background-color: #a71d2a;
+}
+
+button.activate-button {
+    background-color: #28a745;
+    color: white;
+}
+
+button.activate-button:hover {
+    background-color: #1e7e34;
+}
+
 
 /* Für kleinere Bildschirme */
 @media (max-width: 768px) {
@@ -270,8 +375,4 @@ main {
         gap: 3rem;
         /* Erhöht den Abstand zwischen den Karten auf großen Bildschirmen */
     }
-}
-
-h2 {
-    text-align: center;
 }

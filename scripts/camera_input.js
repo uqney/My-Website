@@ -9,7 +9,7 @@ const captureCanvas = document.getElementById('capture-canvas');
 cameraContainer.style.display = 'none';
 
 activateCameraButton.addEventListener('click', () => {
-    navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+    navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment', width: { ideal: 3840 } }, height: { ideal: 2160 } })
         .then((stream) => {
             cameraContainer.style.display = 'block'; // Show the camera container
             const cameraPreview = document.getElementById('camera-preview');
@@ -29,24 +29,27 @@ captureButton.addEventListener('click', () => {
     captureCanvas.height = cameraPreview.videoHeight;
     context.drawImage(cameraPreview, 0, 0, captureCanvas.width, captureCanvas.height);
 
-    const imageData = captureCanvas.toDataURL('image/png');
+    const compressedImageUrl = getCompressedImageUrl(captureCanvas);
+
+    // Update Panorama Viewer with captured image
+    viewPanorama(compressedImageUrl, []);
+
     const img = document.createElement('img');
-    img.src = imageData;
+    img.src = compressedImageUrl;
     img.alt = 'Captured Panorama';
     img.width = captureCanvas.width;
     img.height = captureCanvas.height;
     img.style.maxWidth = '100%';
 
     // Save image to Local Storage
-    const panoramas = JSON.parse(localStorage.getItem('uploadedPanoramas')) || [];
     const panoramaData = {
-        imageUrl: imageData,
+        imageUrl: compressedImageUrl,
         width: img.width,
         height: img.height,
         timeStamp: new Date().toLocaleString()
     };
-    panoramas.push(panoramaData);
-    localStorage.setItem('uploadedPanoramas', JSON.stringify(panoramas));
+
+    addDataToLocalStorage(panoramaData);
 
     alert('Bild wurde erfolgreich gespeichert!');
 });

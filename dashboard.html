@@ -32,9 +32,24 @@
   <main>
     <h2>Uploaded panoramas</h2>
 
+    <template id="panorama-template">
+      <div class="panorama-element">
+        <h3 class="panorama-title">Titel</h3>
+        <img src="" alt="Panorama" class="panorama-image">
+        <p class="panorama-dimensions">Abmessungen</p>
+        <p class="panorama-upload-info">Upload-Info</p>
+        <div class="button-container">
+          <button class="activate-button">Set as active</button>
+          <button class="edit-button">Edit</button>
+          <button class="delete-button">Remove</button>
+        </div>
+      </div>
+    </template>
     <div id="panorama-list"></div>
+
   </main>
 
+  <script src="scripts/local_storage_management.js"></script>
   <script src="scripts/dashboard.js"></script>
 </body>
 
