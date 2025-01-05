@@ -268,6 +268,10 @@ main {
     font-size: 1.2rem;
     font-weight: bold;
     margin-bottom: 0.5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
 }
 
 /* Panorama Dimensions */

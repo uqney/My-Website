@@ -46,7 +46,7 @@ captureButton.addEventListener('click', () => {
     // Save image to Local Storage
     const panoramaData = {
         imageUrl: compressedImageUrl,
-        name: `Panorama captured on ${timeStamp}`,
+        title: `Panorama captured on ${timeStamp}`,
         width: img.width,
         height: img.height,
         timeStamp: timeStamp

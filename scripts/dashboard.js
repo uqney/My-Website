@@ -25,7 +25,10 @@ function displayPanoramas() {
         image.alt = `Panorama ${index + 1}`;
 
         const heading = clone.querySelector('.panorama-title');
-        heading.textContent = panorama.name;
+        const fullTitle = panorama.title;
+        heading.textContent = fullTitle;
+        heading.title = fullTitle; // Tooltip mit vollem Titel
+
 
         const dimensions = clone.querySelector('.panorama-dimensions');
         dimensions.textContent = `${panorama.width}px × ${panorama.height}px`;

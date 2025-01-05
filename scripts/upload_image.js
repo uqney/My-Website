@@ -3,11 +3,20 @@ const uploadInput = document.getElementById('upload-image');
 uploadInput.addEventListener('change', function (event) {
     const file = event.target.files[0];
     const fileName = file.name;
+    const baseName = fileName.substring(0, fileName.lastIndexOf('.'));
     if (file) {
         // Überprüfen, ob die Datei ein Bild ist und den erlaubten Typ hat
         const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
         if (!allowedTypes.includes(file.type)) {
             alert('Die hochgeladene Datei ist kein unterstütztes Bildformat. Erlaubt sind: JPEG, PNG, WEBP.');
+            uploadInput.value = ''; // Zurücksetzen des Eingabefeldes
+            return;
+        }
+
+        // Überprüfen, ob das Bild bereits hochgeladen wurde
+        const isDuplicate = checkDuplicateImage(baseName);
+        if (isDuplicate) {
+            alert('Dieses Bild wurde bereits hochgeladen.');
             uploadInput.value = ''; // Zurücksetzen des Eingabefeldes
             return;
         }
@@ -38,6 +47,7 @@ uploadInput.addEventListener('change', function (event) {
                 canvas.height = height;
                 context.drawImage(img, 0, 0, width, height);
 
+
                 const compressedImageUrl = getCompressedImageUrl(canvas);
 
                 // Hotspots definieren
@@ -47,15 +57,17 @@ uploadInput.addEventListener('change', function (event) {
 
                 viewPanorama(compressedImageUrl, hotspots);
 
+
                 // Speichern des Bildes und der Hotspots im localStorage
                 const panoramaData = {
                     imageUrl: compressedImageUrl,
-                    name: fileName.substring(0, fileName.lastIndexOf('.')),
+                    title: baseName,
                     hotSpots: hotspots,
                     width: width,
                     height: height,
                     timeStamp: timeStamp
                 };
+
                 addDataToLocalStorage(panoramaData);
             };
 
@@ -66,6 +78,11 @@ uploadInput.addEventListener('change', function (event) {
         uploadInput.value = ''; // Zurücksetzen des Eingabefeldes, falls keine Datei gewählt wurde
     }
 });
+
+function checkDuplicateImage(baseName) {
+    const panoramas = JSON.parse(localStorage.getItem('uploadedPanoramas')) || [];
+    return panoramas.some(panorama => panorama.title === baseName);
+}
 
 function getCompressedImageUrl(canvas) {
     var compressedImageUrl = canvas.toDataURL('image/jpeg', 0.8);
