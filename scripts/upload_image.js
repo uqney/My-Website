@@ -2,6 +2,7 @@ const uploadInput = document.getElementById('upload-image');
 
 uploadInput.addEventListener('change', function (event) {
     const file = event.target.files[0];
+    const fileName = file.name;
     if (file) {
         // Überprüfen, ob die Datei ein Bild ist und den erlaubten Typ hat
         const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
@@ -42,15 +43,18 @@ uploadInput.addEventListener('change', function (event) {
                 // Hotspots definieren
                 const hotspots = [];
 
+                const timeStamp = new Date().toLocaleString();
+
                 viewPanorama(compressedImageUrl, hotspots);
 
                 // Speichern des Bildes und der Hotspots im localStorage
                 const panoramaData = {
                     imageUrl: compressedImageUrl,
+                    name: fileName.substring(0, fileName.lastIndexOf('.')),
                     hotSpots: hotspots,
                     width: width,
                     height: height,
-                    timeStamp: new Date().toLocaleString()
+                    timeStamp: timeStamp
                 };
                 addDataToLocalStorage(panoramaData);
             };

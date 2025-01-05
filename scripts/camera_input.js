@@ -41,12 +41,15 @@ captureButton.addEventListener('click', () => {
     img.height = captureCanvas.height;
     img.style.maxWidth = '100%';
 
+    const timeStamp = new Date().toLocaleString();
+
     // Save image to Local Storage
     const panoramaData = {
         imageUrl: compressedImageUrl,
+        name: `Panorama captured on ${timeStamp}`,
         width: img.width,
         height: img.height,
-        timeStamp: new Date().toLocaleString()
+        timeStamp: timeStamp
     };
 
     addDataToLocalStorage(panoramaData);

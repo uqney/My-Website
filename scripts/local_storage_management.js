@@ -6,7 +6,7 @@ function addDataToLocalStorage(data) {
 
 function removeDataFromLocalStorage(title) {
     const panoramas = JSON.parse(localStorage.getItem('uploadedPanoramas')) || [];
-    const updatedPanoramas = panoramas.filter(panorama => `Panorama ${panoramas.indexOf(panorama) + 1}` !== title);
+    const updatedPanoramas = panoramas.filter(panorama => panorama.name != title);
 
     // Aktualisiere den Local Storage
     localStorage.setItem('uploadedPanoramas', JSON.stringify(updatedPanoramas));

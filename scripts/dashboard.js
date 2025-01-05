@@ -2,9 +2,9 @@ function updatePanoramaListStatus() {
     const panoramaList = document.getElementById("panorama-list");
     const panoramas = JSON.parse(localStorage.getItem('uploadedPanoramas')) || [];
 
-    if (panoramas.length === 0) {
+    if (panoramas.length == 0) {
         panoramaList.classList.add("empty");
-        panoramaList.innerHTML = "<p>Keine Panoramen vorhanden.</p>";
+        panoramaList.innerHTML = "<p>No panoramas available.</p>";
     } else {
         panoramaList.classList.remove("empty");
     }
@@ -25,13 +25,13 @@ function displayPanoramas() {
         image.alt = `Panorama ${index + 1}`;
 
         const heading = clone.querySelector('.panorama-title');
-        heading.textContent = `Panorama ${index + 1}`;
+        heading.textContent = panorama.name;
 
         const dimensions = clone.querySelector('.panorama-dimensions');
         dimensions.textContent = `${panorama.width}px × ${panorama.height}px`;
 
         const uploadInfo = clone.querySelector('.panorama-upload-info');
-        uploadInfo.textContent = `Uploaded at: ${panorama.timeStamp}`;
+        uploadInfo.textContent = `Uploaded on: ${panorama.timeStamp}`;
 
         panoramaList.appendChild(clone);
     });
@@ -61,18 +61,18 @@ function handleEdit(panoramaElement) {
 }
 
 function handleDelete(panoramaElement) {
-    if (confirm("Möchtest du dieses Panorama wirklich löschen?")) {
+    if (confirm("Do you really want to remove this panorama?")) {
         const title = panoramaElement.querySelector(".panorama-title").textContent;
         removeDataFromLocalStorage(title);
         panoramaElement.remove();
         updatePanoramaListStatus();
-        alert(`${title} wurde erfolgreich gelöscht.`);
+        alert(`${title} was removed successfully.`);
     }
 }
 
 function handleActivate(panoramaElement) {
     const title = panoramaElement.querySelector(".panorama-title").textContent;
-    alert(`${title} wurde als aktives Panorama gesetzt!`);
+    alert(`${title} was set as active!`);
     // TODO: Hier kannst du das Aktivieren-Feature implementieren
 }
 
