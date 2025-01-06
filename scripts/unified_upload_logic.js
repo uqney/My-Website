@@ -28,6 +28,10 @@ function uploadFromCamera(video, captureCanvas) {
     captureCanvas.height = video.videoHeight;
     context.drawImage(video, 0, 0, captureCanvas.width, captureCanvas.height);
 
+    if (isAspectRatioTooSmall((captureCanvas.width / captureCanvas.height), 'camera')) {
+        return;
+    }
+
     const compressedImageUrl = getCompressedImageUrl(captureCanvas);
     const timeStamp = new Date().toLocaleString();
 
@@ -46,7 +50,7 @@ function uploadFromCamera(video, captureCanvas) {
  * Verarbeitung eines Bildes aus einem Datei-Upload
  * @param {File} file - Die hochgeladene Datei.
  */
-function uploadFromFile(file, baseName) {
+function uploadFromFile(file, baseName, uploadInput) {
     if (file) {
         // Überprüfen, ob die Datei ein Bild ist und den erlaubten Typ hat
         const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
@@ -74,13 +78,9 @@ function uploadFromFile(file, baseName) {
                 const height = img.height;
                 const aspectRatio = width / height;
 
-                // Warnen, falls das Seitenverhältnis kleiner als 16:9 ist
-                if (aspectRatio < 16 / 9) {
-                    const proceed = confirm('The aspect ratio of the image is smaller than 16:9. It could be distorted in the display. Would you still like to upload the image?');
-                    if (!proceed) {
-                        uploadInput.value = ''; // Zurücksetzen des Eingabefeldes
-                        return;
-                    }
+                if (isAspectRatioTooSmall(aspectRatio, 'file')) {
+                    uploadInput.value = ''; // Zurücksetzen des Eingabefeldes
+                    return;
                 }
 
                 // Komprimierung des Bildes
@@ -112,6 +112,23 @@ function uploadFromFile(file, baseName) {
 function checkDuplicateImage(baseName) {
     const panoramas = JSON.parse(localStorage.getItem('uploadedPanoramas')) || [];
     return panoramas.some(panorama => panorama.title === baseName);
+}
+
+function isAspectRatioTooSmall(aspectRatio, uploadSrc) {
+    if (aspectRatio < 1) {
+        if (uploadSrc == 'camera') {
+            alert('The aspect ratio of the image is smaller than 1:1. It will be distorted in the display. Please take another one (maybe rotate your device).');
+        } else if (uploadSrc == 'file') {
+            alert('The aspect ratio of the image is smaller than 1:1. It will be distorted in the display. Please select another one.');
+        }
+        return true;
+    } else if (aspectRatio < (16 / 9)) {
+        const proceed = confirm('The aspect ratio of the image is smaller than 16:9. It could be distorted in the display. Would you still like to upload the image?');
+        if (!proceed) {
+            return true;
+        }
+    }
+    return false;
 }
 
 function getCompressedImageUrl(canvas) {

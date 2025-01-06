@@ -5,5 +5,5 @@ uploadInput.addEventListener('change', function (event) {
     const fileName = file.name;
     const baseName = fileName.substring(0, fileName.lastIndexOf('.'));
 
-    uploadFromFile(file, baseName);
+    uploadFromFile(file, baseName, uploadInput);
 });
