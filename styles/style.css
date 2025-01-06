@@ -235,6 +235,9 @@ main {
 
 /* Panorama Item Styles */
 .panorama-element {
+    max-width: 100%;
+    max-height: 80vh;
+    /* Bild passt sich der Containerbreite an */
     background-color: var(--element-background, #f9f9f9);
     border: 1px solid var(--element-border, #ddd);
     border-radius: 10px;
@@ -243,9 +246,10 @@ main {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 1rem;
+    padding: 10px;
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box;
 }
 
 .panorama-element:hover {
@@ -260,11 +264,14 @@ main {
     /* Heller grüner Hintergrund */
 }
 
+.panorama-element.active h3 {
+    color: #000000;
+}
 
 /* Panorama Image Styles */
 .panorama-image {
     max-width: 100%;
-    max-height: 100%;
+    max-height: 80%;
     height: auto;
     border-radius: 5px;
     margin-bottom: 0.5rem;
@@ -326,6 +333,13 @@ button.activate-button:hover {
     background-color: #1e7e34;
 }
 
+.activate-button:disabled {
+    background-color: #ccc;
+    /* Grauer Hintergrund */
+    color: #666;
+    /* Grauer Text */
+    cursor: not-allowed;
+}
 
 /* Für kleinere Bildschirme */
 @media (max-width: 768px) {

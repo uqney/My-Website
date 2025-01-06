@@ -37,9 +37,13 @@ function displayPanoramas() {
         const uploadInfo = rootElement.querySelector('.panorama-upload-info');
         uploadInfo.textContent = `Uploaded on: ${panorama.timeStamp}`;
 
+        const activateButton = rootElement.querySelector('.activate-button');
+
         // Aktives Panorama hervorheben
         if (panorama.isActive) {
             rootElement.classList.add("active");
+            activateButton.disabled = true;
+            activateButton.textContent = "Already active";
         }
 
         panoramaList.appendChild(clone);
@@ -58,7 +62,7 @@ function addEventListenersToButtons() {
         } else if (target.classList.contains("delete-button")) {
             handleDelete(panoramaElement);
         } else if (target.classList.contains("activate-button")) {
-            handleActivate(panoramaElement);
+            handleActivate(panoramaElement, false);
         }
     });
 }
@@ -71,15 +75,38 @@ function handleEdit(panoramaElement) {
 
 function handleDelete(panoramaElement) {
     if (confirm("Do you really want to remove this panorama?")) {
+        const panoramas = JSON.parse(localStorage.getItem('uploadedPanoramas')) || [];
         const title = panoramaElement.querySelector(".panorama-title").textContent;
-        removeDataFromLocalStorage(title);
+
+        // Filtere das zu löschende Panorama aus der Liste
+        const updatedPanoramas = panoramas.filter(panorama => panorama.title !== title);
+
+        // Überprüfen, ob das gelöschte Panorama aktiv war
+        const wasActive = panoramas.find(panorama => panorama.title === title)?.isActive;
+
+        // Wenn das aktive Panorama gelöscht wurde, setze das nächste als aktiv
+        if (wasActive && updatedPanoramas.length > 0) {
+            updatedPanoramas[0].isActive = true;
+        }
+
+        // Speichere die aktualisierte Liste im Local Storage
+        localStorage.setItem('uploadedPanoramas', JSON.stringify(updatedPanoramas));
+
+        // Entferne das Element aus der DOM
         panoramaElement.remove();
         updatePanoramaListStatus();
+
+        // Aktualisiere die Anzeige, falls ein neues Panorama aktiv ist
+        if (wasActive && updatedPanoramas.length > 0) {
+            const newActiveElement = document.querySelector(".panorama-element");
+            handleActivate(newActiveElement, true);
+        }
+
         alert(`${title} has been removed successfully.`);
     }
 }
 
-function handleActivate(panoramaElement) {
+function handleActivate(panoramaElement, isSilent) {
     const panoramas = JSON.parse(localStorage.getItem('uploadedPanoramas')) || [];
     const title = panoramaElement.querySelector(".panorama-title").textContent;
 
@@ -96,7 +123,18 @@ function handleActivate(panoramaElement) {
     allElements.forEach(element => element.classList.remove("active"));
     panoramaElement.classList.add("active");
 
-    alert(`${title} wurde als aktives Panorama gesetzt!`);
+    // Button-Status aktualisieren
+    const allButtons = document.querySelectorAll(".activate-button");
+    allButtons.forEach(button => {
+        const buttonTitle = button.closest(".panorama-element").querySelector(".panorama-title").textContent;
+        button.disabled = (buttonTitle === title);
+        button.textContent = (buttonTitle === title) ? "Already active" : "Set as active";
+    });
+
+    // Nur ein Alert anzeigen, wenn isSilent false ist
+    if (!isSilent) {
+        alert(`${title} has been set as active!`);
+    }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
