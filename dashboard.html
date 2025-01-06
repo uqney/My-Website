@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>360° Panorama Viewer</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css" />
   <link rel="stylesheet" href="styles/style.css" />
   <link rel="stylesheet" href="styles/dark_mode_slider.css" />
   <script src="scripts/toggle_theme.js"></script>
@@ -51,9 +52,24 @@
     </template>
     <div id="panorama-list"></div>
 
+    <!-- Overlay für den Bearbeitungsmodus -->
+    <div id="edit-overlay">
+      <div id="edit-header">
+        <button id="close-edit" class="overlay-btn">Close</button>
+        <button id="save-edit" class="overlay-btn">Save</button>
+        <button id="add-hotspot" class="overlay-btn">Add hotspot</button>
+      </div>
+      <div id="panorama-edit-container">
+        <!-- Der Panorama Viewer wird hier geladen -->
+        <div id="panorama-viewer"></div>
+      </div>
+    </div>
+
   </main>
 
+  <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
   <script src="scripts/local_storage_management.js"></script>
+  <script src="scripts/edit_panorama.js"></script>
   <script src="scripts/dashboard.js"></script>
 </body>
 

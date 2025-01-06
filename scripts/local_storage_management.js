@@ -1,9 +1,3 @@
-function addDataToLocalStorage(data) {
-    const panoramas = JSON.parse(localStorage.getItem('uploadedPanoramas')) || [];
-    panoramas.push(data);
-    localStorage.setItem('uploadedPanoramas', JSON.stringify(panoramas));
-}
-
 function optimizeLocalStorageSpace() {
     const panoramas = JSON.parse(localStorage.getItem('uploadedPanoramas')) || [];
     panoramas.forEach(panorama => {
@@ -17,5 +11,4 @@ function optimizeLocalStorageSpace() {
         panorama.imageUrl = canvas.toDataURL('image/jpeg', 0.5);
     });
     localStorage.setItem('uploadedPanoramas', JSON.stringify(panoramas));
-    console.log("image deletet");
 }

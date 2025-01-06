@@ -1,20 +1,20 @@
 function updatePanoramaListStatus() {
-    const panoramaList = document.getElementById("panorama-list");
+    const panoramaList = document.getElementById('panorama-list');
     const panoramas = JSON.parse(localStorage.getItem('uploadedPanoramas')) || [];
 
     if (panoramas.length == 0) {
-        panoramaList.classList.add("empty");
-        panoramaList.innerHTML = "<p>No panoramas available.</p>";
+        panoramaList.classList.add('empty');
+        panoramaList.innerHTML = '<p>No panoramas available.</p>';
     } else {
-        panoramaList.classList.remove("empty");
+        panoramaList.classList.remove('empty');
     }
 }
 
 function displayPanoramas() {
     updatePanoramaListStatus();
 
-    const panoramaList = document.getElementById("panorama-list");
-    const panoramaTemplate = document.getElementById("panorama-template");
+    const panoramaList = document.getElementById('panorama-list');
+    const panoramaTemplate = document.getElementById('panorama-template');
     const panoramas = JSON.parse(localStorage.getItem('uploadedPanoramas')) || [];
 
     panoramas.forEach((panorama, index) => {
@@ -41,9 +41,9 @@ function displayPanoramas() {
 
         // Aktives Panorama hervorheben
         if (panorama.isActive) {
-            rootElement.classList.add("active");
+            rootElement.classList.add('active');
             activateButton.disabled = true;
-            activateButton.textContent = "Already active";
+            activateButton.textContent = 'Already active';
         }
 
         panoramaList.appendChild(clone);
@@ -51,32 +51,34 @@ function displayPanoramas() {
 }
 
 function addEventListenersToButtons() {
-    const panoramaList = document.getElementById("panorama-list");
+    const panoramaList = document.getElementById('panorama-list');
 
-    panoramaList.addEventListener("click", (event) => {
+    panoramaList.addEventListener('click', (event) => {
         const target = event.target;
-        const panoramaElement = target.closest(".panorama-element");
+        const panoramaElement = target.closest('.panorama-element');
 
-        if (target.classList.contains("edit-button")) {
+        if (target.classList.contains('edit-button')) {
             handleEdit(panoramaElement);
-        } else if (target.classList.contains("delete-button")) {
+        } else if (target.classList.contains('delete-button')) {
             handleDelete(panoramaElement);
-        } else if (target.classList.contains("activate-button")) {
+        } else if (target.classList.contains('activate-button')) {
             handleActivate(panoramaElement, false);
         }
     });
 }
 
 function handleEdit(panoramaElement) {
-    const title = panoramaElement.querySelector(".panorama-title").textContent;
-    alert(`Bearbeiten von ${title}`);
-    // TODO: Hier kannst du das Bearbeiten-Feature implementieren
+    const panoramas = JSON.parse(localStorage.getItem('uploadedPanoramas')) || [];
+    const title = panoramaElement.querySelector('.panorama-title').textContent;
+    const panorama = panoramas.find(panorama => panorama.title == title);
+
+    initalizeOverlay(panorama);
 }
 
 function handleDelete(panoramaElement) {
-    if (confirm("Do you really want to remove this panorama?")) {
+    if (confirm('Do you really want to remove this panorama?')) {
         const panoramas = JSON.parse(localStorage.getItem('uploadedPanoramas')) || [];
-        const title = panoramaElement.querySelector(".panorama-title").textContent;
+        const title = panoramaElement.querySelector('.panorama-title').textContent;
 
         // Filtere das zu löschende Panorama aus der Liste
         const updatedPanoramas = panoramas.filter(panorama => panorama.title !== title);
@@ -98,7 +100,7 @@ function handleDelete(panoramaElement) {
 
         // Aktualisiere die Anzeige, falls ein neues Panorama aktiv ist
         if (wasActive && updatedPanoramas.length > 0) {
-            const newActiveElement = document.querySelector(".panorama-element");
+            const newActiveElement = document.querySelector('.panorama-element');
             handleActivate(newActiveElement, true);
         }
 
@@ -108,7 +110,7 @@ function handleDelete(panoramaElement) {
 
 function handleActivate(panoramaElement, isSilent) {
     const panoramas = JSON.parse(localStorage.getItem('uploadedPanoramas')) || [];
-    const title = panoramaElement.querySelector(".panorama-title").textContent;
+    const title = panoramaElement.querySelector('.panorama-title').textContent;
 
     // Finde das Panorama und markiere es als aktiv
     panoramas.forEach(panorama => {
@@ -119,16 +121,16 @@ function handleActivate(panoramaElement, isSilent) {
     localStorage.setItem('uploadedPanoramas', JSON.stringify(panoramas));
 
     // Visuelles Feedback im Dashboard
-    const allElements = document.querySelectorAll(".panorama-element");
-    allElements.forEach(element => element.classList.remove("active"));
-    panoramaElement.classList.add("active");
+    const allElements = document.querySelectorAll('.panorama-element');
+    allElements.forEach(element => element.classList.remove('active'));
+    panoramaElement.classList.add('active');
 
     // Button-Status aktualisieren
-    const allButtons = document.querySelectorAll(".activate-button");
+    const allButtons = document.querySelectorAll('.activate-button');
     allButtons.forEach(button => {
-        const buttonTitle = button.closest(".panorama-element").querySelector(".panorama-title").textContent;
+        const buttonTitle = button.closest('.panorama-element').querySelector('.panorama-title').textContent;
         button.disabled = (buttonTitle === title);
-        button.textContent = (buttonTitle === title) ? "Already active" : "Set as active";
+        button.textContent = (buttonTitle === title) ? 'Already active' : 'Set as active';
     });
 
     // Nur ein Alert anzeigen, wenn isSilent false ist
@@ -137,7 +139,7 @@ function handleActivate(panoramaElement, isSilent) {
     }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('DOMContentLoaded', () => {
     displayPanoramas();
     addEventListenersToButtons();
 });

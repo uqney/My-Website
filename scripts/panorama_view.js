@@ -1,10 +1,10 @@
-function viewPanorama(imageUrl, hotspots) {
+function viewPanorama(imageUrl, hotSpots) {
     // Pannellum Viewer initialisieren
     pannellum.viewer('panorama', {
-        "type": "equirectangular",
-        "panorama": imageUrl,
-        "autoLoad": true,
-        "hotSpots": hotspots
+        'type': 'equirectangular',
+        'panorama': imageUrl,
+        'autoLoad': true,
+        'hotSpots': hotSpots
     });
 }
 
@@ -18,4 +18,3 @@ window.onload = function () {
         }
     });
 };
-

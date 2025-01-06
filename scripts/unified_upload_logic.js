@@ -40,6 +40,7 @@ function uploadFromCamera(video, captureCanvas) {
         title: `Panorama captured on ${timeStamp}`,
         width: captureCanvas.width,
         height: captureCanvas.height,
+        hotSpots: [],
         timeStamp: timeStamp
     };
 
@@ -98,6 +99,7 @@ function uploadFromFile(file, baseName, uploadInput) {
                     title: baseName,
                     width: width,
                     height: height,
+                    hotSpots: [],
                     timeStamp: timeStamp,
                 }
 
@@ -132,7 +134,7 @@ function isAspectRatioTooSmall(aspectRatio, uploadSrc) {
 }
 
 function getCompressedImageUrl(canvas) {
-    var compressedImageUrl = canvas.toDataURL('image/jpeg', 0.8);
+    let compressedImageUrl = canvas.toDataURL('image/jpeg', 0.8);
 
     // Speicherplatz prüfen
     const imageSize = Math.ceil(compressedImageUrl.length / 1024); // Größe in KB
