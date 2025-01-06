@@ -55,13 +55,33 @@
     <!-- Overlay für den Bearbeitungsmodus -->
     <div id="edit-overlay">
       <div id="edit-header">
-        <button id="close-edit" class="overlay-btn">Close</button>
         <button id="save-edit" class="overlay-btn">Save</button>
+        <button id="cancel-edit" class="overlay-btn">Cancel</button>
         <button id="add-hotspot" class="overlay-btn">Add hotspot</button>
       </div>
       <div id="panorama-edit-container">
         <!-- Der Panorama Viewer wird hier geladen -->
         <div id="panorama-viewer"></div>
+      </div>
+      <!-- Eingabemaske für Hotspot-Details -->
+      <div id="hotspot-form-overlay">
+        <div id="hotspot-form">
+          <label for="hotspot-type">Type:</label>
+          <select id="hotspot-type">
+            <option value="info">Info</option>
+            <option value="scene">Scene</option>
+            <option value="link">Link</option>
+          </select>
+
+          <label for="hotspot-text">Text:</label>
+          <input type="text" id="hotspot-text" placeholder="Hotspot text">
+
+          <label for="hotspot-target" id="hotspot-target-label">Target:</label>
+          <input type="text" id="hotspot-target" class="hidden" placeholder="URL or Scene ID">
+
+          <button id="hotspot-add" class="overlay-btn">Add</button>
+          <button id="hotspot-cancel" class="overlay-btn">Cancel</button>
+        </div>
       </div>
     </div>
 

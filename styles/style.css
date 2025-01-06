@@ -464,3 +464,63 @@ button.activate-button:hover {
     width: 100%;
     height: 100%;
 }
+
+/* Hotspot Form Styles */
+#hotspot-form-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1100;
+    visibility: hidden;
+    opacity: 0;
+}
+
+#hotspot-form-overlay.visible {
+    visibility: visible;
+    /* Sichtbar machen */
+    opacity: 1;
+}
+
+#hotspot-form {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 300px;
+}
+
+#hotspot-form label {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+#hotspot-form input,
+#hotspot-form select {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#hotspot-form button {
+    padding: 10px 15px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+}
+
+#hotspot-form button:hover {
+    background-color: #0056b3;
+}
