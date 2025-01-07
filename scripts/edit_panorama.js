@@ -24,12 +24,14 @@ function initalizeOverlay(currentPanorama) {
 
 function hideOverlay() {
     overlay.classList.remove('visible');
+    location.reload();
 }
 
 function handleSave(panorama, currentHotSpots) {
+    console.log(currentHotSpots);
     const panoramas = JSON.parse(localStorage.getItem('uploadedPanoramas')) || [];
 
-    const panoramaIndex = panoramas.findIndex(p => p.imageUrl === panorama.imageUrl);
+    const panoramaIndex = panoramas.findIndex(p => p.imageUrl == panorama.imageUrl);
 
     if (panoramaIndex !== -1) {
         panoramas[panoramaIndex].hotSpots = currentHotSpots;
@@ -39,12 +41,16 @@ function handleSave(panorama, currentHotSpots) {
         alert('Panorama not found!');
     }
 
+    console.log(panoramas[panoramaIndex].hotSpots);
     hideOverlay();
 }
 
 function handleCancel() {
-    const panoramas = JSON.parse(localStorage.getItem('uploadedPanoramas')) || [];
     hideOverlay();
+}
+
+function generateUniqueId() {
+    return 'hotspot-' + Math.random().toString(36).substr(2, 9);
 }
 
 function handleAddHotspot(viewer) {
@@ -54,10 +60,13 @@ function handleAddHotspot(viewer) {
     const handleClick = (event) => {
         const coords = viewer.mouseEventToCoords(event);
 
+        const hotspotId = generateUniqueId();
+
         const pitch = coords[0];
         const yaw = coords[1];
 
         pendingHotSpot = {
+            id: hotspotId,
             pitch: pitch,
             yaw: yaw,
             type: 'info',
@@ -81,8 +90,6 @@ function handleAddHotspot(viewer) {
 
 function hotspotTooltip(hotSpotDiv, args) {
     hotSpotDiv.classList.add('custom-tooltip'); // Stil hinzufügen
-    hotSpotDiv.setAttribute('data-pitch', args.pitch);
-    hotSpotDiv.setAttribute('data-yaw', args.yaw);
     var span = document.createElement('span'); // Tooltip-Inhalt hinzufügen
     span.innerHTML = args.text;
     hotSpotDiv.appendChild(span); // Tooltip dem Div hinzufügen
@@ -108,51 +115,72 @@ function hotspotTooltip(hotSpotDiv, args) {
     deleteButton.style.marginLeft = (deleteButton.scrollWidth + 20 - hotSpotDiv.offsetWidth) / 2 + 'px';
     deleteButton.style.marginTop = deleteButton.scrollHeight - 10 + 'px';
 
+    const index = currentHotSpots.findIndex(h =>
+        (h.pitch == args.pitch) && (h.yaw == args.yaw)
+    );
+
+    let hotspot = currentHotSpots[index];
+
     editButton.addEventListener('click', (event) => {
         event.stopPropagation();
-        editHotspot(args);
+        editHotspot(hotspot);
     });
+
 
     deleteButton.addEventListener('click', (event) => {
         event.stopPropagation();
         if (confirm('Do you really want to delete this hotspot?')) {
-            deleteHotspot(args);
+            deleteHotspotById(hotspot.id);
         }
     });
 }
 
-function editHotspot(args) {
-
-    const hotspot = {
-        pitch: args.pitch,
-        yaw: args.yaw,
-        type: args.type,
-        createTooltipArgs: args
-    }
+function editHotspot(hotspot) {
     showHotspotForm(hotspot);
 }
 
-function deleteHotspot(args) {
-    const index = currentHotSpots.findIndex(h =>
-        h.pitch === args.pitch && h.yaw === args.yaw
-    );
-    if (index !== -1) {
-        currentHotSpots.splice(index, 1);
-        viewer.removeHotSpot(currentHotSpots[index]);
-
-        const hotspotDiv = document.querySelector(`[data-pitch="${args.pitch}"][data-yaw="${args.yaw}"]`);
-        if (hotspotDiv) {
-            hotspotDiv.remove();
-        }
-
-        alert(`Hotspot deleted.`);
+function deleteHotspotById(hotspotId) {
+    // Entferne den Hotspot aus dem Viewer
+    const success = viewer.removeHotSpot(hotspotId);
+    if (!success) {
+        console.error(`Hotspot mit ID ${hotspotId} konnte nicht entfernt werden.`);
+        return;
     }
+
+    // Aktualisiere die Hotspot-Liste
+    currentHotSpots = currentHotSpots.filter(h => h.id != hotspotId);
+
+    alert('Hotspot has been deleted.');
+    refreshViewer();
 }
 
+function refreshViewer() {
+    console.log(currentHotSpots);
+    viewer.destroy(); // Zerstöre den aktuellen Viewer
+
+    // Erstelle den Viewer mit den aktualisierten Hotspots neu
+    viewer = pannellum.viewer('panorama-viewer', {
+        type: 'equirectangular',
+        panorama: panorama.imageUrl,
+        autoLoad: true,
+        hotSpots: currentHotSpots,
+    });
+}
+
+
 function showHotspotForm(hotspot) {
+    let updatedData = hotspot;
+    const index = currentHotSpots.findIndex(h =>
+        (h.pitch == hotspot.pitch) && (h.yaw == hotspot.yaw)
+    );
+
+    if (index >= 0) {
+        viewer.removeHotSpot(hotspot.id);
+    }
+
     formOverlay.classList.add('visible');
-    typeSelect.value = hotspot.type;
-    textInput.value = hotspot.createTooltipArgs.text;
+    typeSelect.value = updatedData.type;
+    textInput.value = updatedData.createTooltipArgs.text;
     targetInput.value = '';
 
     typeSelect.addEventListener('change', () => {
@@ -167,15 +195,15 @@ function showHotspotForm(hotspot) {
     });
 
     formSaveButton.addEventListener('click', () => {
-        hotspot.type = typeSelect.value;
-        hotspot.createTooltipArgs.text = textInput.value;
-        if (hotspot.type === "scene") {
-            hotspot.sceneId = targetInput.value;
-        } else if (hotspot.type === "link") {
-            hotspot.url = targetInput.value;
+        updatedData.type = typeSelect.value;
+        updatedData.createTooltipArgs.text = textInput.value;
+        if (updatedData.type === "scene") {
+            updatedData.sceneId = targetInput.value;
+        } else if (updatedData.type === "link") {
+            updatedData.url = targetInput.value;
         }
 
-        viewer.addHotSpot(hotspot);
+        viewer.addHotSpot(updatedData);
 
         hideHotspotForm();
     });
@@ -194,10 +222,6 @@ function setPanorama(currentPanorama) {
 }
 
 function setViewer() {
-    if (viewer) {
-        viewer.destroy();
-    }
-
     currentHotSpots.forEach(hotspot => {
         hotspot.createTooltipFunc = hotspotTooltip; // Funktion neu zuweisen
     });
@@ -219,7 +243,7 @@ function getCurrentViewer() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    cancelButton.addEventListener('click', hideOverlay);
+    cancelButton.addEventListener('click', handleCancel);
 
     saveButton.addEventListener('click', () => {
         const panorama = getCurrentPanorama(); // Schreibe eine Funktion, die das aktuelle Panorama zurückgibt
