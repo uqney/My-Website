@@ -34,11 +34,16 @@ function handleSave(panorama, currentHotSpots) {
     if (panoramaIndex !== -1) {
         panoramas[panoramaIndex].hotSpots = currentHotSpots;
         localStorage.setItem('uploadedPanoramas', JSON.stringify(panoramas));
-        alert('Hotspots saved successfully!');
+        alert('Changes saved successfully!');
     } else {
         alert('Panorama not found!');
     }
 
+    hideOverlay();
+}
+
+function handleCancel() {
+    const panoramas = JSON.parse(localStorage.getItem('uploadedPanoramas')) || [];
     hideOverlay();
 }
 
@@ -49,11 +54,20 @@ function handleAddHotspot(viewer) {
     const handleClick = (event) => {
         const coords = viewer.mouseEventToCoords(event);
 
+        const pitch = coords[0];
+        const yaw = coords[1];
+
         pendingHotSpot = {
-            pitch: coords[0],
-            yaw: coords[1],
+            pitch: pitch,
+            yaw: yaw,
             type: 'info',
-            text: 'New Hotspot'
+            createTooltipFunc: hotspotTooltip,
+            createTooltipArgs: {
+                text: 'New Hotspot',
+                pitch: pitch,
+                yaw: yaw,
+                type: 'info'
+            }
         };
 
         showHotspotForm(pendingHotSpot);
@@ -65,11 +79,80 @@ function handleAddHotspot(viewer) {
     container.addEventListener('click', handleClick);
 }
 
+function hotspotTooltip(hotSpotDiv, args) {
+    hotSpotDiv.classList.add('custom-tooltip'); // Stil hinzufügen
+    hotSpotDiv.setAttribute('data-pitch', args.pitch);
+    hotSpotDiv.setAttribute('data-yaw', args.yaw);
+    var span = document.createElement('span'); // Tooltip-Inhalt hinzufügen
+    span.innerHTML = args.text;
+    hotSpotDiv.appendChild(span); // Tooltip dem Div hinzufügen
+
+    const editButton = document.createElement('button');
+    editButton.innerHTML = '<i class="material-icons">edit</i>';
+    hotSpotDiv.appendChild(editButton);
+
+    const deleteButton = document.createElement('button');
+    deleteButton.innerHTML = '<i class="material-icons">delete</i>';
+    hotSpotDiv.appendChild(deleteButton);
+
+    // Positionierung anpassen
+    span.style.width = span.scrollWidth - 20 + 'px';
+    span.style.marginLeft = -(span.scrollWidth - hotSpotDiv.offsetWidth) / 2 + 'px';
+    span.style.marginTop = -span.scrollHeight - 12 + 'px';
+
+    editButton.style.width = editButton.scrollWidth - 20 + 'px';
+    editButton.style.marginLeft = (editButton.scrollWidth - 90 - hotSpotDiv.offsetWidth) / 2 + 'px';
+    editButton.style.marginTop = editButton.scrollHeight - 10 + 'px';
+
+    deleteButton.style.width = deleteButton.scrollWidth - 20 + 'px';
+    deleteButton.style.marginLeft = (deleteButton.scrollWidth + 20 - hotSpotDiv.offsetWidth) / 2 + 'px';
+    deleteButton.style.marginTop = deleteButton.scrollHeight - 10 + 'px';
+
+    editButton.addEventListener('click', (event) => {
+        event.stopPropagation();
+        editHotspot(args);
+    });
+
+    deleteButton.addEventListener('click', (event) => {
+        event.stopPropagation();
+        if (confirm('Do you really want to delete this hotspot?')) {
+            deleteHotspot(args);
+        }
+    });
+}
+
+function editHotspot(args) {
+
+    const hotspot = {
+        pitch: args.pitch,
+        yaw: args.yaw,
+        type: args.type,
+        createTooltipArgs: args
+    }
+    showHotspotForm(hotspot);
+}
+
+function deleteHotspot(args) {
+    const index = currentHotSpots.findIndex(h =>
+        h.pitch === args.pitch && h.yaw === args.yaw
+    );
+    if (index !== -1) {
+        currentHotSpots.splice(index, 1);
+        viewer.removeHotSpot(currentHotSpots[index]);
+
+        const hotspotDiv = document.querySelector(`[data-pitch="${args.pitch}"][data-yaw="${args.yaw}"]`);
+        if (hotspotDiv) {
+            hotspotDiv.remove();
+        }
+
+        alert(`Hotspot deleted.`);
+    }
+}
+
 function showHotspotForm(hotspot) {
     formOverlay.classList.add('visible');
-
     typeSelect.value = hotspot.type;
-    textInput.value = hotspot.text;
+    textInput.value = hotspot.createTooltipArgs.text;
     targetInput.value = '';
 
     typeSelect.addEventListener('change', () => {
@@ -85,7 +168,7 @@ function showHotspotForm(hotspot) {
 
     formSaveButton.addEventListener('click', () => {
         hotspot.type = typeSelect.value;
-        hotspot.text = textInput.value;
+        hotspot.createTooltipArgs.text = textInput.value;
         if (hotspot.type === "scene") {
             hotspot.sceneId = targetInput.value;
         } else if (hotspot.type === "link") {
@@ -94,7 +177,6 @@ function showHotspotForm(hotspot) {
 
         viewer.addHotSpot(hotspot);
 
-        alert("Hotspot added!");
         hideHotspotForm();
     });
 
@@ -112,15 +194,19 @@ function setPanorama(currentPanorama) {
 }
 
 function setViewer() {
+    if (viewer) {
+        viewer.destroy();
+    }
+
+    currentHotSpots.forEach(hotspot => {
+        hotspot.createTooltipFunc = hotspotTooltip; // Funktion neu zuweisen
+    });
+
     viewer = pannellum.viewer('panorama-viewer', {
         'type': 'equirectangular',
         'panorama': panorama.imageUrl,
         'autoLoad': true,
         'hotSpots': currentHotSpots
-    });
-
-    currentHotSpots.forEach(hotspot => {
-        addDeleteButtonToHotspot(hotspot);
     });
 }
 
