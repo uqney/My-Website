@@ -74,7 +74,7 @@ The **Panorama Viewer** is a web application that allows users to upload and vie
 
 ## **How to Use**
 
-1. Open the [website](https://saishadow.github.io/).
+1. Open the [website](https://uqney.github.io/).
 2. Upload a panorama image via the interface.
 3. Once uploaded, interact with the image by clicking on the hotspots to view more information.
 4. Use the **Dashboard** to manage hotspots and view an overview of all uploaded images.
