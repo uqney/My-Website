@@ -1,21 +1,32 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>360° Panorama Viewer</title>
+
+  <!-- Material Icons for displaying icons -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+  <!-- Pannellum CSS for the 360° Panorama Viewer -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css" />
+
+  <!-- Custom CSS files -->
   <link rel="stylesheet" href="styles/global.css">
   <link rel="stylesheet" href="styles/home.css" />
   <link rel="stylesheet" href="styles/dark_mode_slider.css" />
+
+  <!-- Script for enabling Dark Mode functionality -->
   <script src="scripts/toggle_theme.js"></script>
+
+  <!-- Favicon for the website -->
   <link rel="icon" href="favico.ico" type="image/x-icon">
 </head>
 
 <body>
 
+  <!-- Header section with title, navigation menu, and Dark Mode toggle -->
   <header>
     <h1>360° Panorama Viewer</h1>
     <nav>
@@ -24,6 +35,7 @@
         <li><a href="dashboard.html">Dashboard</a></li>
       </ul>
     </nav>
+    <!-- Dark Mode toggle switch -->
     <div id="dark-mode-container" class="fixed-top-right">
       <label class="switch">
         <input type="checkbox" id="dark-mode-toggle">
@@ -36,24 +48,32 @@
   </header>
 
   <main>
+    <!-- Informational text to guide users -->
     <p style="text-align: center;">Take a new picture with your camera or select one from your device:</p>
+
+    <!-- Section for camera activation or file upload -->
     <div class="selection-container">
       <button id="activate-camera" class="button">Activate camera</button>
+      <!-- Hidden file input for camera activation -->
       <input type="file" accept="image/*;capture=camera" id="camera-input" class="input" style="display: none;">
       <span class="seperator">or</span>
+      <!-- File upload input for selecting images -->
       <input type="file" accept="image/*" capture="environment" id="upload-image" class="input">
     </div>
 
+    <!-- Camera preview container with controls -->
     <div class="camera-container">
-      <video id="camera-preview" playsinline autoplay></video>
+      <video id="camera-preview" playsinline autoplay></video> <!-- Live preview of the camera -->
       <button id="capture-button" data-tooltip="Take a photo"><i class="material-icons">photo_camera</i></button>
       <button id="close-camera" data-tooltip="Close camera"><i class="material-icons">no_photography</i></button>
-      <canvas id="capture-canvas"></canvas>
+      <canvas id="capture-canvas"></canvas> <!-- Canvas element for capturing photos -->
     </div>
 
+    <!-- Container for the Panorama Viewer -->
     <div id="panorama" class="panorama-container"></div>
   </main>
 
+  <!-- External libraries and project-specific scripts -->
   <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
   <script src="scripts/local_storage_management.js"></script>
   <script src="scripts/unified_upload_logic.js"></script>

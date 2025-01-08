@@ -1,21 +1,32 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>360° Panorama Viewer</title>
+
+  <!-- Material Icons for displaying icons -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+  <!-- Pannellum CSS for the 360° Panorama Viewer -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css" />
+
+  <!-- Custom CSS files -->
   <link rel="stylesheet" href="styles/global.css">
   <link rel="stylesheet" href="styles/dashboard.css" />
   <link rel="stylesheet" href="styles/dark_mode_slider.css" />
+
+  <!-- Script for enabling Dark Mode functionality -->
   <script src="scripts/toggle_theme.js"></script>
+
+  <!-- Favicon for the website -->
   <link rel="icon" href="favico.ico" type="image/png">
 </head>
 
 <body>
 
+  <!-- Header section with title, navigation menu, and Dark Mode toggle -->
   <header>
     <h1>360° Panorama Viewer</h1>
     <nav>
@@ -24,6 +35,7 @@
         <li><a href="">Dashboard</a></li>
       </ul>
     </nav>
+    <!-- Dark Mode toggle switch -->
     <div id="dark-mode-container" class="fixed-top-right">
       <label class="switch">
         <input type="checkbox" id="dark-mode-toggle">
@@ -36,8 +48,10 @@
   </header>
 
   <main>
+    <!-- Section heading -->
     <h2>Uploaded panoramas</h2>
 
+    <!-- Template for rendering a panorama item -->
     <template id="panorama-template">
       <div class="panorama-element">
         <img src="" alt="Panorama" class="panorama-image">
@@ -46,6 +60,7 @@
           <p class="panorama-dimensions">dimensions</p>
           <p class="panorama-upload-date">upload-date</p>
           <div class="button-container">
+            <!-- Buttons for managing panoramas -->
             <button class="activate-button">Set as active</button>
             <button class="edit-button">Edit</button>
             <button class="delete-button">Remove</button>
@@ -53,20 +68,23 @@
         </div>
       </div>
     </template>
+
+    <!-- Container to hold the list of uploaded panoramas -->
     <div id="panorama-list"></div>
 
-    <!-- Overlay für den Bearbeitungsmodus -->
+    <!-- Overlay for edit mode -->
     <div id="edit-overlay">
+      <!-- Header for the edit overlay with control buttons -->
       <div id="edit-header">
         <button id="save-edit" class="overlay-btn">Save</button>
         <button id="cancel-edit" class="overlay-btn">Cancel</button>
         <button id="add-hotspot" class="overlay-btn">Add hotspot</button>
       </div>
+      <!-- Container for loading the panorama viewer in edit mode -->
       <div id="panorama-edit-container">
-        <!-- Der Panorama Viewer wird hier geladen -->
         <div id="panorama-viewer"></div>
       </div>
-      <!-- Eingabemaske für Hotspot-Details -->
+      <!-- Form overlay for editing hotspot details -->
       <div id="hotspot-form-overlay">
         <div id="hotspot-form">
           <label for="hotspot-type">Type:</label>
@@ -79,9 +97,11 @@
           <label for="hotspot-text">Text:</label>
           <input type="text" id="hotspot-text" placeholder="Hotspot text">
 
+          <!-- Input for specifying target details -->
           <label for="hotspot-target" id="hotspot-target-label">Target:</label>
           <input type="text" id="hotspot-target" class="hidden" placeholder="URL or Scene ID">
 
+          <!-- Buttons for hotspot form actions -->
           <button id="hotspot-add" class="overlay-btn">Apply</button>
           <button id="hotspot-cancel" class="overlay-btn">Cancel</button>
         </div>
@@ -90,6 +110,7 @@
 
   </main>
 
+  <!-- External libraries and project-specific scripts -->
   <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
   <script src="scripts/local_storage_management.js"></script>
   <script src="scripts/edit_panorama.js"></script>

@@ -1,3 +1,4 @@
+/* Position the toggle switch in the top-right corner */
 .fixed-top-right {
     position: absolute;
     top: 10px;
@@ -19,7 +20,7 @@
     height: 0;
 }
 
-/* The slider */
+/* The slider element */
 .slider {
     position: absolute;
     cursor: pointer;
@@ -28,11 +29,11 @@
     right: 0;
     bottom: 0;
     background-color: transparent;
-    /* Hintergrund transparent */
+    /* Transparent background */
     transition: .4s;
     border-radius: 24px;
     border: 2px solid #000033;
-    /* Optional: Rahmen für mehr Sichtbarkeit */
+    /* Optional: Border for better visibility */
 }
 
 .slider:before {
@@ -43,62 +44,76 @@
     left: 3px;
     bottom: 3px;
     background-color: transparent;
-    /* Kein Hintergrund */
+    /* No background by default */
     transition: .4s;
     border-radius: 50%;
+    /* Round shape for the toggle knob */
     box-shadow: none;
-    /* Optional: Schatten entfernen */
+    /* Optional: Remove shadow for a cleaner look */
 }
 
+/* Styles when the checkbox is checked */
 input:checked+.slider {
     background-color: transparent;
-    /* Hintergrund transparent */
+    /* Keep the background transparent */
     border-color: #99CCFF;
-    /* Rahmenfarbe anpassen */
+    /* Change border color when active */
 }
 
 input:checked+.slider:before {
     transform: translateX(26px);
+    /* Move the knob to the right */
 }
 
-/* Icons Styling */
+/* Icon Styling */
 .sun-icon,
 .moon-icon {
     position: absolute;
     top: 50%;
+    /* Vertically center the icon */
     transform: translateY(-50%);
     font-size: 20px;
-    /* Größere Icons für bessere Sichtbarkeit */
+    /* Larger size for better visibility */
     transition: opacity 0.4s ease, transform 0.4s ease;
     pointer-events: none;
-    /* Klicks auf die Icons ignorieren */
+    /* Prevent clicks on the icons */
 }
 
+/* Sun icon styles (visible by default) */
 .sun-icon {
     left: 3px;
+    /* Position on the left side */
     top: 14px;
-    /* Zentriere das Icon besser */
+    /* Adjust vertical alignment */
     color: #f39c12;
+    /* Yellow color for the sun */
     opacity: 1;
+    /* Fully visible */
 }
 
+/* Moon icon styles (hidden by default) */
 .moon-icon {
     right: 10px;
+    /* Position on the right side */
     top: 14px;
-    /* Zentriere das Icon besser */
+    /* Adjust vertical alignment */
     color: #34495e;
+    /* Dark color for the moon */
     opacity: 0;
+    /* Hidden by default */
 }
 
-/* Bewegung und Sichtbarkeit der Icons im aktiven Zustand */
+/* Adjust the visibility and position of the icons when checked */
 input:checked+.slider .sun-icon {
     transform: translateY(-50%) translateX(-10px);
-    /* Leicht nach links schieben */
+    /* Slide slightly left */
     opacity: 0;
+    /* Hide the sun icon */
 }
 
 input:checked+.slider .moon-icon {
     transform: translateY(-50%) translateX(10px);
-    /* Leicht nach rechts schieben */
+    /* Slide slightly right */
     opacity: 1;
+    /* Show the moon icon */
 }

@@ -1,9 +1,7 @@
-@import "global.css";
-
 /* Panorama List */
 #panorama-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(45vw, 1fr));
     gap: 1rem;
     padding: 1rem;
     width: 100%;
@@ -30,20 +28,22 @@
 
 /* Panorama Item Styles */
 .panorama-element {
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    /* Flexbox für horizontale Aufteilung */
     max-height: 90vh;
     background-color: var(--element-background);
     border: 1px solid var(--element-border);
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    flex-wrap: wrap;
-    align-items: center;
     padding: 10px;
-    text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    gap: 20px;
+    /* Abstand zwischen Bild und Text */
     box-sizing: border-box;
+    overflow: hidden;
 }
 
 .panorama-element:hover {
@@ -65,15 +65,22 @@
 /* Panorama Image Styles */
 .panorama-image {
     max-width: 100%;
-    max-height: 80%;
+    /* Bild nimmt die Hälfte des Platzes ein */
+    max-height: 100%;
     height: auto;
     border-radius: 5px;
-    margin-bottom: 0.5rem;
+    flex-shrink: 0;
+    /* Bild bleibt in seiner Größe */
 }
 
 .panorama-info {
     display: flex;
     flex-direction: column;
+    flex-grow: 1;
+    /* Nimmt verbleibenden Platz ein */
+    justify-content: center;
+    /* Zentriert Inhalte vertikal */
+    overflow: hidden;
 }
 
 /* Panorama Title */
@@ -81,15 +88,19 @@
     font-size: 1.2rem;
     font-weight: bold;
     margin-bottom: 0.5rem;
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
+    max-width: 100%;
+    /* Begrenzung innerhalb des Containers */
 }
 
 /* Panorama Dimensions */
 .panorama-dimensions {
     font-size: 0.9rem;
     margin-bottom: 0.5rem;
+    word-break: break-word;
+    /* Lange Wörter umbrechen */
 }
 
 /* Panorama Upload Info */
@@ -99,9 +110,11 @@
 
 .button-container {
     display: flex;
-    justify-content: center;
     gap: 10px;
-    margin-top: 10px;
+    flex-wrap: wrap;
+    /* Umbrechen bei wenig Platz */
+    justify-content: center;
+    /* Links ausrichten */
 }
 
 button.edit-button {
@@ -210,13 +223,15 @@ button.activate-button:hover {
 
 @media (max-height: 400px) {
     .panorama-image {
-        max-height: 50%;
+        max-width: 100%;
+        max-height: 40%;
     }
 }
 
 @media (max-height: 600px) {
     .panorama-image {
-        max-height: 60%;
+        max-width: 100%;
+        max-height: 50%;
     }
 }
 
