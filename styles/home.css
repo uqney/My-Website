@@ -73,8 +73,7 @@ button[data-tooltip]:hover::after {
 }
 
 #camera-preview {
-    width: 100%;
-    height: auto;
+    max-height: 75vh;
     border: 2px solid #ccc;
     border-radius: 10px;
     margin-bottom: 10px;
