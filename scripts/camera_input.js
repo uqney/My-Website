@@ -10,10 +10,6 @@ const cameraInput = document.getElementById('camera-input');
 cameraContainer.style.display = 'none';
 
 activateCameraButton.addEventListener('click', () => {
-    if (isMobileDevice) {
-        cameraInput.click();
-        return;
-    }
     navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment', width: { ideal: 3840 }, height: { ideal: 2160 } } })
         .then((stream) => {
             cameraContainer.style.display = 'block'; // Show the camera container
@@ -44,5 +40,5 @@ closeCameraButton.addEventListener('click', () => {
 });
 
 function isMobileDevice() {
-    return /Android|iPhone|iPad/i.test(navigator.userAgent);
+    return /android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 }
