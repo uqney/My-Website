@@ -1,7 +1,4 @@
-button:hover {
-    background-color: #0056b3;
-}
-
+/* Tooltip styles for buttons */
 button[data-tooltip] {
     position: relative;
     cursor: pointer;
@@ -9,7 +6,6 @@ button[data-tooltip] {
 
 button[data-tooltip]::after {
     content: attr(data-tooltip);
-    /* Tooltip-Text aus Attribut */
     visibility: hidden;
     background-color: #333;
     color: #fff;
@@ -24,7 +20,6 @@ button[data-tooltip]::after {
     opacity: 0;
     transition: opacity 0.3s;
     white-space: nowrap;
-    /* Verhindert Zeilenumbruch */
 }
 
 button[data-tooltip]:hover::after {
@@ -32,6 +27,7 @@ button[data-tooltip]:hover::after {
     opacity: 1;
 }
 
+/* Selection container layout */
 .selection-container {
     display: flex;
     align-items: center;
@@ -50,21 +46,18 @@ button[data-tooltip]:hover::after {
     cursor: pointer;
 }
 
+/* Camera container styling */
 .camera-container {
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
     align-items: center;
     justify-content: center;
     margin: 5px auto;
     padding: 10px;
     max-height: 80vh;
     max-width: fit-content;
-    /* Optional: Begrenzung der Breite */
     border-radius: 10px;
-    /* Optional: Abgerundete Ecken */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    /* Optional: Schatteneffekt */
 }
 
 video {
@@ -79,9 +72,9 @@ video {
 
 #capture-canvas {
     display: none;
-    /* Canvas nur für interne Zwecke einblenden */
 }
 
+/* Panorama container responsive styles */
 .panorama-container {
     height: 70vh;
     width: 100%;
@@ -94,7 +87,6 @@ video {
 }
 
 @media (max-width: 768px) {
-
     .panorama-container {
         height: 50vh;
     }
@@ -127,6 +119,7 @@ video {
     }
 }
 
+/* Custom tooltip styles */
 div.custom-tooltip span {
     visibility: hidden;
     position: absolute;
@@ -154,5 +147,4 @@ div.custom-tooltip:hover span:after {
     border-color: #fff transparent transparent transparent;
     bottom: -20px;
     left: -10px;
-    margin: 0 50%;
 }

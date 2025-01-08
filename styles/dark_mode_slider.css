@@ -29,11 +29,11 @@
     right: 0;
     bottom: 0;
     background-color: transparent;
-    /* Transparent background */
     transition: .4s;
+    /* Smooth transition */
     border-radius: 24px;
     border: 2px solid #000033;
-    /* Optional: Border for better visibility */
+    /* Border color */
 }
 
 .slider:before {
@@ -44,10 +44,10 @@
     left: 3px;
     bottom: 3px;
     background-color: transparent;
-    /* No background by default */
     transition: .4s;
+    /* Smooth transition */
     border-radius: 50%;
-    /* Round shape for the toggle knob */
+    /* Round shape for the knob */
     box-shadow: none;
     /* Optional: Remove shadow for a cleaner look */
 }
@@ -55,7 +55,6 @@
 /* Styles when the checkbox is checked */
 input:checked+.slider {
     background-color: transparent;
-    /* Keep the background transparent */
     border-color: #99CCFF;
     /* Change border color when active */
 }
@@ -70,11 +69,12 @@ input:checked+.slider:before {
 .moon-icon {
     position: absolute;
     top: 50%;
-    /* Vertically center the icon */
     transform: translateY(-50%);
+    /* Vertically center the icon */
     font-size: 20px;
     /* Larger size for better visibility */
     transition: opacity 0.4s ease, transform 0.4s ease;
+    /* Smooth transition */
     pointer-events: none;
     /* Prevent clicks on the icons */
 }

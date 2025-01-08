@@ -18,7 +18,7 @@
     justify-content: center;
     align-items: center;
     height: 100%;
-    /* Elterncontainer sollte eine Höhe haben */
+    /* Parent container should have a height */
 }
 
 #panorama-list.empty p {
@@ -33,7 +33,7 @@
     text-align: center;
     align-items: center;
     justify-content: center;
-    /* Flexbox für horizontale Aufteilung */
+    /* Flexbox for horizontal layout */
     max-height: 90vh;
     background-color: var(--element-background);
     border: 1px solid var(--element-border);
@@ -41,7 +41,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 10px;
     gap: 20px;
-    /* Abstand zwischen Bild und Text */
+    /* Space between image and text */
     box-sizing: border-box;
     overflow: hidden;
 }
@@ -53,9 +53,9 @@
 
 .panorama-element.active {
     border: 2px solid #4caf50;
-    /* Grüner Rahmen */
+    /* Green border */
     background-color: #f0fff0;
-    /* Heller grüner Hintergrund */
+    /* Light green background */
 }
 
 .panorama-element.active h3 {
@@ -65,21 +65,21 @@
 /* Panorama Image Styles */
 .panorama-image {
     max-width: 100%;
-    /* Bild nimmt die Hälfte des Platzes ein */
+    /* Image takes up half of the space */
     max-height: 100%;
     height: auto;
     border-radius: 5px;
     flex-shrink: 0;
-    /* Bild bleibt in seiner Größe */
+    /* Image stays its size */
 }
 
 .panorama-info {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    /* Nimmt verbleibenden Platz ein */
+    /* Takes up remaining space */
     justify-content: center;
-    /* Zentriert Inhalte vertikal */
+    /* Vertically center content */
     overflow: hidden;
 }
 
@@ -92,7 +92,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 100%;
-    /* Begrenzung innerhalb des Containers */
+    /* Restrict within container */
 }
 
 /* Panorama Dimensions */
@@ -100,7 +100,7 @@
     font-size: 0.9rem;
     margin-bottom: 0.5rem;
     word-break: break-word;
-    /* Lange Wörter umbrechen */
+    /* Break long words */
 }
 
 /* Panorama Upload Info */
@@ -112,9 +112,9 @@
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
-    /* Umbrechen bei wenig Platz */
+    /* Wrap on smaller screens */
     justify-content: center;
-    /* Links ausrichten */
+    /* Center alignment */
 }
 
 button.edit-button {
@@ -146,32 +146,32 @@ button.activate-button:hover {
 
 .activate-button:disabled {
     background-color: #ccc;
-    /* Grauer Hintergrund */
+    /* Gray background */
     color: #666;
-    /* Grauer Text */
+    /* Gray text */
     cursor: not-allowed;
 }
 
-/* Für kleinere Bildschirme */
+/* For smaller screens */
 @media (max-width: 768px) {
     #panorama-list {
         padding: 0.5rem;
-        /* Weniger Außenabstand */
+        /* Reduced padding */
     }
 
     .panorama-element {
         padding: 0.25rem;
-        /* Weniger Innenabstand */
+        /* Reduced padding */
     }
 
     .panorama-element h3 {
         font-size: 0.875rem;
-        /* Kleinere Schriftgröße für Titel */
+        /* Smaller font size for title */
     }
 
     .panorama-element p {
         font-size: 0.75rem;
-        /* Kleinere Schriftgröße für Text */
+        /* Smaller font size for text */
     }
 
     .panorama-element button {
@@ -180,26 +180,26 @@ button.activate-button:hover {
     }
 }
 
-/* Für sehr kleine Bildschirme */
+/* For very small screens */
 @media (max-width: 480px) {
     #panorama-list {
         padding: 0.25rem;
-        /* Noch weniger Außenabstand */
+        /* Even less padding */
     }
 
     .panorama-element {
         padding: 0.2rem;
-        /* Noch kompakter für sehr kleine Bildschirme */
+        /* More compact for very small screens */
     }
 
     .panorama-element h3 {
         font-size: 0.75rem;
-        /* Noch kleinere Schriftgröße für Titel */
+        /* Even smaller font size for title */
     }
 
     .panorama-element p {
         font-size: 0.7rem;
-        /* Noch kleinere Schriftgröße für Text */
+        /* Even smaller font size for text */
     }
 
     .panorama-element button {
@@ -208,7 +208,7 @@ button.activate-button:hover {
     }
 }
 
-/* Hover-Effekt für die Panorama-Elemente */
+/* Hover effect for panorama elements */
 .panorama-element:hover {
     transform: scale(1.02);
     transition: transform 0.2s ease-in-out;
@@ -217,7 +217,7 @@ button.activate-button:hover {
 @media (min-width: 1440px) {
     #panorama-list {
         gap: 3rem;
-        /* Erhöht den Abstand zwischen den Karten auf großen Bildschirmen */
+        /* Increase gap between items on large screens */
     }
 }
 
@@ -249,16 +249,16 @@ button.activate-button:hover {
     align-items: center;
     z-index: 1000;
     visibility: hidden;
-    /* Unsichtbar machen */
+    /* Hidden initially */
     opacity: 0;
-    /* Für Übergangseffekte */
+    /* For transition effects */
     transition: visibility 0s, opacity 0.3s ease-in-out;
-    /* Weicher Übergang */
+    /* Smooth transition */
 }
 
 #edit-overlay.visible {
     visibility: visible;
-    /* Sichtbar machen */
+    /* Make visible */
     opacity: 1;
 }
 
@@ -314,7 +314,7 @@ button.activate-button:hover {
 
 #hotspot-form-overlay.visible {
     visibility: visible;
-    /* Sichtbar machen */
+    /* Make visible */
     opacity: 1;
 }
 
@@ -356,7 +356,7 @@ button.activate-button:hover {
     background-color: #0056b3;
 }
 
-
+/* Tooltip Styles */
 div.custom-tooltip span {
     visibility: hidden;
     position: absolute;

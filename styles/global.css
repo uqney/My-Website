@@ -7,9 +7,9 @@
     --element-border: #dddddd;
     --button-color: #ffffff;
     --button-background: #000033;
-
 }
 
+/* General body styles */
 body {
     background-color: var(--background-color);
     color: var(--text-color);
@@ -18,9 +18,10 @@ body {
     padding: 0;
     box-sizing: border-box;
     transition: background-color 0.3s, color 0.3s;
+    /* Smooth transition for theme changes */
 }
 
-/* Dark Mode Variablen */
+/* Dark Mode Variables */
 body.dark {
     --background-color: #121212;
     --text-color: #e0e0e0;
@@ -32,6 +33,7 @@ body.dark {
     --button-background: #99CCFF;
 }
 
+/* Header styles */
 header {
     background-color: var(--header-background);
     color: var(--header-text-color);
@@ -39,6 +41,7 @@ header {
     padding: 20px;
 }
 
+/* Header links styling */
 header ul {
     list-style: none;
     padding: 0;
@@ -56,14 +59,17 @@ header ul li a {
     text-decoration: none;
 }
 
+/* Main content styling */
 main {
     padding: 20px;
 }
 
+/* H2 title styling */
 h2 {
     text-align: center;
 }
 
+/* Button styling */
 button {
     background-color: #007bff;
     color: white;
@@ -72,4 +78,9 @@ button {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+}
+
+/* Button hover effect */
+button:hover {
+    background-color: #0056b3;
 }
