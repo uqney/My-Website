@@ -34,7 +34,7 @@ function displayPanoramas() {
         const dimensions = rootElement.querySelector('.panorama-dimensions');
         dimensions.textContent = `${panorama.width}px × ${panorama.height}px`;
 
-        const uploadInfo = rootElement.querySelector('.panorama-upload-info');
+        const uploadInfo = rootElement.querySelector('.panorama-upload-date');
         uploadInfo.textContent = `Uploaded on: ${panorama.timeStamp}`;
 
         const activateButton = rootElement.querySelector('.activate-button');
