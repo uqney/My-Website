@@ -28,7 +28,6 @@ function hideOverlay() {
 }
 
 function handleSave(panorama, currentHotSpots) {
-    console.log(currentHotSpots);
     const panoramas = JSON.parse(localStorage.getItem('uploadedPanoramas')) || [];
 
     const panoramaIndex = panoramas.findIndex(p => p.imageUrl == panorama.imageUrl);
@@ -40,8 +39,6 @@ function handleSave(panorama, currentHotSpots) {
     } else {
         alert('Panorama not found!');
     }
-
-    console.log(panoramas[panoramaIndex].hotSpots);
     hideOverlay();
 }
 
@@ -143,7 +140,7 @@ function deleteHotspotById(hotspotId) {
     // Entferne den Hotspot aus dem Viewer
     const success = viewer.removeHotSpot(hotspotId);
     if (!success) {
-        console.error(`Hotspot mit ID ${hotspotId} konnte nicht entfernt werden.`);
+        alert('Hotspot could not de deleted.');
         return;
     }
 
@@ -155,7 +152,6 @@ function deleteHotspotById(hotspotId) {
 }
 
 function refreshViewer() {
-    console.log(currentHotSpots);
     viewer.destroy(); // Zerstöre den aktuellen Viewer
 
     // Erstelle den Viewer mit den aktualisierten Hotspots neu
