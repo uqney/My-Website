@@ -63,7 +63,8 @@ button[data-tooltip]:hover::after {
     justify-content: center;
     margin: 5px auto;
     padding: 10px;
-    max-width: 80vh;
+    max-height: 80vh;
+    width: auto;
     /* Optional: Begrenzung der Breite */
     border-radius: 10px;
     /* Optional: Abgerundete Ecken */
