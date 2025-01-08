@@ -10,7 +10,20 @@ const cameraInput = document.getElementById('camera-input');
 cameraContainer.style.display = 'none';
 
 activateCameraButton.addEventListener('click', () => {
-    cameraInput.click();
+    if (isMobileDevice) {
+        cameraInput.click();
+        return;
+    }
+    navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment', width: { ideal: 3840 }, height: { ideal: 2160 } } })
+        .then((stream) => {
+            cameraContainer.style.display = 'block'; // Show the camera container
+            const video = document.getElementById('camera-preview');
+            video.srcObject = stream;
+        })
+        .catch((error) => {
+            console.error('Error accessing the camera:', error);
+            alert('Unable to access the camera. Please check your permissions.');
+        });
 });
 
 cameraInput.addEventListener('change', (event) => {
@@ -29,3 +42,7 @@ captureButton.addEventListener('click', () => {
 closeCameraButton.addEventListener('click', () => {
     cameraContainer.style.display = 'none';
 });
+
+function isMobileDevice() {
+    return /Android|iPhone|iPad/i.test(navigator.userAgent);
+}
