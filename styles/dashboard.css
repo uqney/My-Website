@@ -235,6 +235,13 @@ button.activate-button:hover {
     }
 }
 
+@media (max-height: 800px) {
+    .panorama-image {
+        max-width: 100%;
+        max-height: 60%;
+    }
+}
+
 /* Overlay Styles */
 #edit-overlay {
     position: fixed;
@@ -383,4 +390,14 @@ div.custom-tooltip:hover button:after {
     bottom: -20px;
     left: -10px;
     margin: 0 50%;
+}
+
+@media (max-height: 600px) {
+    .overlay-btn {
+        font-size: 10px;
+    }
+
+    #panorama-edit-container {
+        height: 70%;
+    }
 }
