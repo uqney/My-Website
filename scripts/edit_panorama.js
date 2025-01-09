@@ -1,4 +1,27 @@
 /**
+ * Get all necessary HTML elements to edit 
+ */
+const overlay = document.getElementById('edit-overlay');
+const cancelButton = document.getElementById('cancel-edit');
+const saveButton = document.getElementById('save-edit');
+const addHotpotButton = document.getElementById('add-hotspot');
+const formOverlay = document.getElementById('hotspot-form-overlay');
+const typeSelect = document.getElementById('hotspot-type');
+const textInput = document.getElementById('hotspot-text');
+const targetLabel = document.getElementById('hotspot-target-label');
+const targetInput = document.getElementById('hotspot-target');
+const formSaveButton = document.getElementById('hotspot-add');
+const formCancelButton = document.getElementById('hotspot-cancel');
+
+/**
+ * Define global variables.
+ */
+let currentHotSpots;
+let viewer;
+let panorama;
+let pendingHotSpot;
+
+/**
  * Initializes the overlay for editing the panorama.
  * It sets the current panorama and viewer.
  * 
